@@ -10,15 +10,16 @@ public class Workout {
     private String location;
     private List<Exercise> exercises;
 
+    // REQUIRES: year > 0, 1 <= month <= 12, 1 <= day <= 31
     // EFFECTS: constructs a new instance of Workout, initialized with parameters and an empty list of exercises
-    public Workout(int month, int day, int year, String workoutType, String location) {
-        date = new ArrayList<Integer>();
+    public Workout(int year, int month, int day, String workoutType, String location) {
+        date = new ArrayList<>();
+        date.add(year);
         date.add(month);
         date.add(day);
-        date.add(year);
         this.workoutType = workoutType;
         this.location = location;
-        exercises = new ArrayList<Exercise>();
+        exercises = new ArrayList<>();
     }
 
     //getters
@@ -39,11 +40,11 @@ public class Workout {
     }
 
     //setters
-    public void setDate(int month, int day, int year) {
-        List<Integer> newDate = new ArrayList<Integer>();
+    public void setDate(int year, int month, int day) {
+        List<Integer> newDate = new ArrayList<>();
+        newDate.add(year);
         newDate.add(month);
         newDate.add(day);
-        newDate.add(year);
         date = newDate;
     }
 
@@ -66,5 +67,20 @@ public class Workout {
     // EFFECTS: removes the exercise from the list of exercises in this workout
     public void removeExercise(Exercise e) {
         exercises.remove(e);
+    }
+
+    // EFFECTS: returns a list of names of the exercises in the workout
+    public List<String> viewExercises() {
+        List<String> exerciseNames = new ArrayList<>();
+        for (Exercise e : exercises) {
+            exerciseNames.add(e.getName());
+        }
+        return exerciseNames;
+    }
+
+    // REQUIRES: e is in exercises
+    // EFFECTS: returns a String of the details of the selected exercise
+    public String viewExerciseDetails(Exercise e) {
+        return e.exerciseDetails();
     }
 }

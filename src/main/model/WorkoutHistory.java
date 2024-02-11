@@ -9,7 +9,7 @@ public class WorkoutHistory {
 
     // EFFECTS: constructs a new instance of WorkoutHistory, initialized as an empty list of workouts
     public WorkoutHistory() {
-        workouts = new ArrayList<Workout>();
+        workouts = new ArrayList<>();
     }
 
     //getter
@@ -28,5 +28,72 @@ public class WorkoutHistory {
     // EFFECTS: removes the workout from the workout history
     public void removeWorkout(Workout w) {
         workouts.remove(w);
+    }
+
+    // EFFECTS: returns a list of specified workouts' date, type, and location details
+    public List<String> viewWorkouts(List<Workout> workoutList) {
+        List<String> workoutBasicDetails = new ArrayList<>();
+        for (Workout w : workoutList) {
+            String details = w.getDate().get(0) + "-" + w.getDate().get(1) + "-" + w.getDate().get(2)
+                    + " " + w.getWorkoutType() + " workout at " + w.getLocation();
+            workoutBasicDetails.add(details);
+        }
+        return workoutBasicDetails;
+    }
+
+    // EFFECTS: returns a list of workouts' date, type, and location details for all workouts in the workout history
+    public List<String> viewWorkouts() {
+        return viewWorkouts(workouts);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: returns reordered list of workouts by date, with most recent first
+    public List<String> sortByDate() {
+        List<Workout> sortedWorkouts = new ArrayList<>();
+        sortedWorkouts.add(workouts.get(0));
+        List<Workout> remainingWorkouts = workouts.subList(1, workouts.size());
+        for (Workout w : remainingWorkouts) {
+            int position = 0;
+            for (Workout sw : sortedWorkouts) {
+                if (w.getDate().equals(sw.getDate())) {
+                    break;
+                }
+                for (int i = 0; i <= 2; i++) {
+                    if (w.getDate().get(i) > sw.getDate().get(i)) {
+                        break;
+                    } else if (w.getDate().get(i) < sw.getDate().get(i)) {
+                        position++;
+                        break;
+                    }
+                }
+            }
+            sortedWorkouts.add(position, w);
+        }
+        return viewWorkouts(sortedWorkouts);
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: returns filtered list of workouts, filtering by given workoutType
+    public List<String> filterByType(String workoutType) {
+        List<Workout> filteredWorkouts = new ArrayList<>();
+        for (Workout w : workouts) {
+            if (w.getWorkoutType().equals(workoutType)) {
+                filteredWorkouts.add(w);
+            }
+        }
+        return viewWorkouts(filteredWorkouts);
+    }
+
+    // REQUIRES: w is in workouts
+    // EFFECTS: returns the details of and the list of exercises in the selected workout
+    public String viewWorkoutDetails(Workout w) {
+        int workoutIndex = workouts.indexOf(w);
+        String exerciseNames = "";
+        for (String s : w.viewExercises()) {
+            exerciseNames += s + ", ";
+        }
+        exerciseNames = exerciseNames.substring(0, exerciseNames.length() - 2);
+        return viewWorkouts().get(workoutIndex) + "\n" + "Exercises: " + exerciseNames;
     }
 }

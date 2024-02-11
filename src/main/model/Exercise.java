@@ -11,7 +11,8 @@ public class Exercise {
     private int restTime;
     private String note;
 
-    // EFFECTS: constructs a new instance of Exercise, initialized with appropriate parameters and no note
+    // REQUIRES: name is non-empty, exerciseType is non-empty, weight >= 0, sets > 0, reps > 0, restTime > 0
+    // EFFECTS: constructs a new instance of Exercise, initialized with parameters and empty note
     public Exercise(String name, String exerciseType, double weight, int sets, int reps, int restTime) {
         this.name = name;
         this.exerciseType = exerciseType;
@@ -78,6 +79,14 @@ public class Exercise {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    // EFFECTS: returns a String of the exercise details
+    public String exerciseDetails() {
+        return name + " is a(n) " + exerciseType + " exercise.\n"
+                + "Weight: " + weight + "lbs\n"
+                + "Sets: " + sets + ", Reps: " + reps + ", Rest time: " + restTime + " seconds\n"
+                + "Notes: " + note;
     }
 
 }
