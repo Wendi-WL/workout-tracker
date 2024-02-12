@@ -28,6 +28,7 @@ public class WorkoutTest {
         assertEquals(0, testWorkout.getExercises().size());
     }
 
+    //TODO: exceptions testing?
 //    @Test
 //    public void constructorEmptyStringsTest() {
 //        assertEquals(2024, testWorkout.getDate().get(0));

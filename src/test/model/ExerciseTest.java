@@ -26,7 +26,7 @@ public class ExerciseTest {
         assertEquals("", testExercise.getNote());
     }
 
-    //!!!
+    //TODO: exceptions testing?
 //    @Test
 //    public void constructorNegativeValuesTest() {
 //        ???
