@@ -76,7 +76,9 @@ public class Workout extends ExerciseList {
     }
 
     // EFFECTS: returns a list of names of the exercises in the workout
+    @Override
     public List<String> listExercises() {
         return listExercises(exercises);
     }
+
 }
