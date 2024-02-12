@@ -28,16 +28,6 @@ public class WorkoutTest {
         assertEquals(0, testWorkout.getExercises().size());
     }
 
-    //TODO: exceptions testing?
-//    @Test
-//    public void constructorEmptyStringsTest() {
-//        assertEquals(2024, testWorkout.getDate().get(0));
-//        assertEquals(1, testWorkout.getDate().get(1));
-//        assertEquals(2, testWorkout.getDate().get(2));
-//        assertEquals("", testWorkout.getWorkoutType());
-//        assertEquals("", testWorkout.getLocation());
-//    }
-
     @Test
     public void addExerciseOnceTest() {
         testWorkout.addExercise(testExercise1);
@@ -78,55 +68,36 @@ public class WorkoutTest {
     }
 
     @Test
-    public void viewExercisesTest() {
-        testWorkout.addExercise(testExercise1);
-        testWorkout.addExercise(testExercise2);
-        assertEquals("exercise1", testWorkout.viewExercises().get(0));
-        assertEquals("exercise2", testWorkout.viewExercises().get(1));
+    public void workoutDetailsTest() {
+        assertEquals("2024-1-2 full body workout at ARC", testWorkout.workoutDetails());
     }
 
     @Test
-    public void viewExercisesWithRemovalTest() {
+    public void workoutDetailsAfterNewSettingsTest() {
+        testWorkout.setDate(2023,11, 30);
+        testWorkout.setWorkoutType("lower body");
+        testWorkout.setLocation("BirdCoop");
+        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkout.workoutDetails());
+    }
+
+    @Test
+    public void listExercisesTest() {
         testWorkout.addExercise(testExercise1);
         testWorkout.addExercise(testExercise2);
-        assertEquals(2, testWorkout.viewExercises().size());
-        assertEquals("exercise1", testWorkout.viewExercises().get(0));
-        assertEquals("exercise2", testWorkout.viewExercises().get(1));
+        assertEquals("exercise1", testWorkout.listExercises().get(0));
+        assertEquals("exercise2", testWorkout.listExercises().get(1));
+    }
+
+    @Test
+    public void listExercisesWithRemovalTest() {
+        testWorkout.addExercise(testExercise1);
+        testWorkout.addExercise(testExercise2);
+        assertEquals(2, testWorkout.listExercises().size());
+        assertEquals("exercise1", testWorkout.listExercises().get(0));
+        assertEquals("exercise2", testWorkout.listExercises().get(1));
         testWorkout.removeExercise(testExercise1);
-        assertEquals(1, testWorkout.viewExercises().size());
-        assertEquals("exercise2", testWorkout.viewExercises().get(0));
-    }
-
-    @Test
-    public void viewExerciseDetailsTest() {
-        testWorkout.addExercise(testExercise1);
-        testWorkout.addExercise(testExercise2);
-        assertEquals("exercise1 is a(n) legs exercise.\n" +
-                "Weight: 27.5lbs\n" +
-                "Sets: 3, Reps: 12, Rest time: 90 seconds\n" +
-                "Notes: ",
-                testWorkout.viewExerciseDetails(testExercise1));
-        assertEquals("exercise2 is a(n) full body exercise.\n" +
-                "Weight: 55.0lbs\n" +
-                "Sets: 4, Reps: 8, Rest time: 120 seconds\n" +
-                "Notes: ",
-                testWorkout.viewExerciseDetails(testExercise2));
-    }
-
-    @Test
-    public void viewExerciseDetailsWithEditsTest() {
-        testWorkout.addExercise(testExercise2);
-        assertEquals("exercise2 is a(n) full body exercise.\n" +
-                        "Weight: 55.0lbs\n" +
-                        "Sets: 4, Reps: 8, Rest time: 120 seconds\n" +
-                        "Notes: ",
-                testWorkout.viewExerciseDetails(testExercise2));
-        testExercise2.setNote("new note");
-        assertEquals("exercise2 is a(n) full body exercise.\n" +
-                        "Weight: 55.0lbs\n" +
-                        "Sets: 4, Reps: 8, Rest time: 120 seconds\n" +
-                        "Notes: new note",
-                testWorkout.viewExerciseDetails(testExercise2));
+        assertEquals(1, testWorkout.listExercises().size());
+        assertEquals("exercise2", testWorkout.listExercises().get(0));
     }
 
 }

@@ -74,20 +74,20 @@ public class WorkoutHistoryTest {
     }
 
     @Test
-    public void viewWorkoutsDefaultTest() {
+    public void listWorkoutsDefaultTest() {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkoutHistory.addWorkout(differentYearWorkout);
-        assertEquals(2, testWorkoutHistory.viewWorkouts().size());
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.viewWorkouts().get(0));
-        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.viewWorkouts().get(1));
+        assertEquals(2, testWorkoutHistory.listWorkoutDetails().size());
+        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.listWorkoutDetails().get(1));
     }
 
     @Test
     public void sortByDateAlreadySortedTest() {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkoutHistory.addWorkout(differentYearWorkout);
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.viewWorkouts().get(0));
-        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.viewWorkouts().get(1));
+        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.listWorkoutDetails().get(1));
         assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.sortByDate().get(1));
     }
@@ -96,8 +96,8 @@ public class WorkoutHistoryTest {
     public void sortByDateSameDateTest() {
         testWorkoutHistory.addWorkout(sameDateWorkout);
         testWorkoutHistory.addWorkout(testWorkout);
-        assertEquals("2024-1-2 core workout at ARC", testWorkoutHistory.viewWorkouts().get(0));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.viewWorkouts().get(1));
+        assertEquals("2024-1-2 core workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
         assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
         assertEquals("2024-1-2 core workout at ARC", testWorkoutHistory.sortByDate().get(1));
 
@@ -107,8 +107,8 @@ public class WorkoutHistoryTest {
     public void sortByDateDifferentYearTest() {
         testWorkoutHistory.addWorkout(differentYearWorkout);
         testWorkoutHistory.addWorkout(testWorkout);
-        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.viewWorkouts().get(0));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.viewWorkouts().get(1));
+        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
         assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.sortByDate().get(1));
     }
@@ -117,8 +117,8 @@ public class WorkoutHistoryTest {
     public void sortByDateDifferentMonthTest() {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkoutHistory.addWorkout(differentMonthWorkout);
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.viewWorkouts().get(0));
-        assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.viewWorkouts().get(1));
+        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
         assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.sortByDate().get(0));
         assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(1));
     }
@@ -127,8 +127,8 @@ public class WorkoutHistoryTest {
     public void sortByDateDifferentDayTest() {
         testWorkoutHistory.addWorkout(differentDayWorkout);
         testWorkoutHistory.addWorkout(testWorkout);
-        assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.viewWorkouts().get(0));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.viewWorkouts().get(1));
+        assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
         assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
         assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.sortByDate().get(1));
     }
@@ -139,10 +139,10 @@ public class WorkoutHistoryTest {
         testWorkoutHistory.addWorkout(differentMonthWorkout);
         testWorkoutHistory.addWorkout(differentDayWorkout);
         testWorkoutHistory.addWorkout(testWorkout);
-        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.viewWorkouts().get(0));
-        assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.viewWorkouts().get(1));
-        assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.viewWorkouts().get(2));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.viewWorkouts().get(3));
+        assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
+        assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.listWorkoutDetails().get(2));
+        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(3));
         assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.sortByDate().get(0));
         assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(1));
         assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.sortByDate().get(2));
@@ -169,7 +169,7 @@ public class WorkoutHistoryTest {
     }
 
     @Test
-    public void viewWorkoutDetailsTest() {
+    public void workoutDetailsAndExercisesTest() {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkout.addExercise(testExercise1);
         testWorkout.addExercise(testExercise2);
@@ -177,8 +177,9 @@ public class WorkoutHistoryTest {
         differentYearWorkout.addExercise(testExercise2);
         differentYearWorkout.addExercise(testExercise1);
         assertEquals("2024-1-2 full body workout at ARC\nExercises: exercise1, exercise2",
-                testWorkoutHistory.viewWorkoutDetails(testWorkout));
+                testWorkoutHistory.workoutDetailsAndExercises(testWorkout));
         assertEquals("2023-11-30 lower body workout at BirdCoop\nExercises: exercise2, exercise1",
-                testWorkoutHistory.viewWorkoutDetails(differentYearWorkout));
+                testWorkoutHistory.workoutDetailsAndExercises(differentYearWorkout));
     }
+
 }

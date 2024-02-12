@@ -2,8 +2,8 @@ package model;
 
 import java.util.*;
 
-// Represents a workout consisting of exercises, and with details of its date, type, and location
-public class Workout {
+// Represents a workout with details of its date, type, location, and a list of the exercises in the workout
+public class Workout extends ExerciseList {
 
     private List<Integer> date;
     private String workoutType;
@@ -69,18 +69,14 @@ public class Workout {
         exercises.remove(e);
     }
 
-    // EFFECTS: returns a list of names of the exercises in the workout
-    public List<String> viewExercises() {
-        List<String> exerciseNames = new ArrayList<>();
-        for (Exercise e : exercises) {
-            exerciseNames.add(e.getName());
-        }
-        return exerciseNames;
+    // EFFECTS: returns a String of the workout details, not including its exercises
+    public String workoutDetails() {
+        return getDate().get(0) + "-" + getDate().get(1) + "-" + getDate().get(2)
+                + " " + getWorkoutType() + " workout at " + getLocation();
     }
 
-    // REQUIRES: e is in exercises
-    // EFFECTS: returns a String of the details of the selected exercise
-    public String viewExerciseDetails(Exercise e) {
-        return e.exerciseDetails();
+    // EFFECTS: returns a list of names of the exercises in the workout
+    public List<String> listExercises() {
+        return listExercises(exercises);
     }
 }

@@ -31,19 +31,17 @@ public class WorkoutHistory {
     }
 
     // EFFECTS: returns a list of specified workouts' date, type, and location details
-    public List<String> viewWorkouts(List<Workout> workoutList) {
-        List<String> workoutBasicDetails = new ArrayList<>();
+    public List<String> listWorkoutDetails(List<Workout> workoutList) {
+        List<String> workoutsDetailsList = new ArrayList<>();
         for (Workout w : workoutList) {
-            String details = w.getDate().get(0) + "-" + w.getDate().get(1) + "-" + w.getDate().get(2)
-                    + " " + w.getWorkoutType() + " workout at " + w.getLocation();
-            workoutBasicDetails.add(details);
+            workoutsDetailsList.add(w.workoutDetails());
         }
-        return workoutBasicDetails;
+        return workoutsDetailsList;
     }
 
     // EFFECTS: returns a list of workouts' date, type, and location details for all workouts in the workout history
-    public List<String> viewWorkouts() {
-        return viewWorkouts(workouts);
+    public List<String> listWorkoutDetails() {
+        return listWorkoutDetails(workouts);
     }
 
     // MODIFIES: this
@@ -69,9 +67,8 @@ public class WorkoutHistory {
             }
             sortedWorkouts.add(position, w);
         }
-        return viewWorkouts(sortedWorkouts);
+        return listWorkoutDetails(sortedWorkouts);
     }
-
 
     // MODIFIES: this
     // EFFECTS: returns filtered list of workouts, filtering by given workoutType
@@ -82,18 +79,18 @@ public class WorkoutHistory {
                 filteredWorkouts.add(w);
             }
         }
-        return viewWorkouts(filteredWorkouts);
+        return listWorkoutDetails(filteredWorkouts);
     }
 
     // REQUIRES: w is in workouts
     // EFFECTS: returns the details of and the list of exercises in the selected workout
-    public String viewWorkoutDetails(Workout w) {
-        int workoutIndex = workouts.indexOf(w);
-        String exerciseNames = "";
-        for (String s : w.viewExercises()) {
-            exerciseNames += s + ", ";
+    public String workoutDetailsAndExercises(Workout w) {
+        StringBuilder exerciseNames = new StringBuilder();
+        for (String s : w.listExercises()) {
+            exerciseNames.append(s).append(", ");
         }
-        exerciseNames = exerciseNames.substring(0, exerciseNames.length() - 2);
-        return viewWorkouts().get(workoutIndex) + "\n" + "Exercises: " + exerciseNames;
+        exerciseNames = new StringBuilder(exerciseNames.substring(0, exerciseNames.length() - 2));
+        return w.workoutDetails() + "\n" + "Exercises: " + exerciseNames;
     }
+
 }
