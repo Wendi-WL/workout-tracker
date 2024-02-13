@@ -168,18 +168,4 @@ public class WorkoutHistoryTest {
         assertEquals(0, testWorkoutHistory.filterByType("upper body").size());
     }
 
-    @Test
-    public void workoutDetailsAndExercisesTest() {
-        testWorkoutHistory.addWorkout(testWorkout);
-        testWorkout.addExercise(testExercise1);
-        testWorkout.addExercise(testExercise2);
-        testWorkoutHistory.addWorkout(differentYearWorkout);
-        differentYearWorkout.addExercise(testExercise2);
-        differentYearWorkout.addExercise(testExercise1);
-        assertEquals("2024-1-2 full body workout at ARC\nExercises: exercise1, exercise2",
-                testWorkoutHistory.workoutDetailsAndExercises(testWorkout));
-        assertEquals("2023-11-30 lower body workout at BirdCoop\nExercises: exercise2, exercise1",
-                testWorkoutHistory.workoutDetailsAndExercises(differentYearWorkout));
-    }
-
 }

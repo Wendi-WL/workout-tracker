@@ -81,4 +81,13 @@ public class Workout extends ExerciseList {
         return listExercises(exercises);
     }
 
+    // EFFECTS: returns the details of and the list of exercises in the workout
+    public String workoutDetailsAndExercises() {
+        StringBuilder exerciseNames = new StringBuilder();
+        for (String s : listExercises()) {
+            exerciseNames.append(s).append(", ");
+        }
+        exerciseNames = new StringBuilder(exerciseNames.substring(0, exerciseNames.length() - 2));
+        return workoutDetails() + "\n" + "Exercises: " + exerciseNames;
+    }
 }

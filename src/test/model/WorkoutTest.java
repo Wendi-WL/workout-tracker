@@ -100,4 +100,23 @@ public class WorkoutTest {
         assertEquals("exercise2", testWorkout.listExercises().get(0));
     }
 
+    @Test
+    public void workoutDetailsAndExercisesTest() {
+        testWorkout.addExercise(testExercise1);
+        testWorkout.addExercise(testExercise2);
+        assertEquals("2024-1-2 full body workout at ARC\nExercises: exercise1, exercise2",
+                testWorkout.workoutDetailsAndExercises());
+    }
+
+    @Test
+    public void workoutDetailsAndExercisesWithRemovalTest() {
+        testWorkout.addExercise(testExercise1);
+        testWorkout.addExercise(testExercise2);
+        assertEquals("2024-1-2 full body workout at ARC\nExercises: exercise1, exercise2",
+                testWorkout.workoutDetailsAndExercises());
+        testWorkout.removeExercise(testExercise1);
+        assertEquals("2024-1-2 full body workout at ARC\nExercises: exercise2",
+                testWorkout.workoutDetailsAndExercises());
+    }
+
 }

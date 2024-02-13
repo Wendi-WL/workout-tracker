@@ -82,15 +82,4 @@ public class WorkoutHistory {
         return listWorkoutDetails(filteredWorkouts);
     }
 
-    // REQUIRES: w is in workouts
-    // EFFECTS: returns the details of and the list of exercises in the selected workout
-    public String workoutDetailsAndExercises(Workout w) {
-        StringBuilder exerciseNames = new StringBuilder();
-        for (String s : w.listExercises()) {
-            exerciseNames.append(s).append(", ");
-        }
-        exerciseNames = new StringBuilder(exerciseNames.substring(0, exerciseNames.length() - 2));
-        return w.workoutDetails() + "\n" + "Exercises: " + exerciseNames;
-    }
-
 }
