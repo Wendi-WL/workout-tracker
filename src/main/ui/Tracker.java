@@ -84,7 +84,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: prints error message and returns to exercises menu if no exercises created,
+    // EFFECTS: prints error message and returns to the exercises menu if no exercises created,
     // otherwise prints exercise list menu with options, and prompts user input
     private void printExerciseListMenu() {
         if (exerciseList.getExerciseList().isEmpty()) {
@@ -101,7 +101,7 @@ public class Tracker {
 
     // MODIFIES: this
     // EFFECTS: creates a new exercise based on prompted user inputs, and prints exercise details,
-    // then prints the exercise list and redirects to exercise list menu, and prompts user input
+    // then prints the exercise list and redirects to the exercise list menu, and prompts user input
     private void createExercise() {
         Exercise exercise;
 
@@ -127,7 +127,7 @@ public class Tracker {
         printExerciseListMenu();
     }
 
-    // EFFECTS: prints workout history, then redirects to workout history menu
+    // EFFECTS: prints workout history, then redirects to the workout history menu
     private void printWorkoutHistory() {
         int num = 1;
         System.out.println("WORKOUT HISTORY");
@@ -138,7 +138,7 @@ public class Tracker {
         printWorkoutHistoryMenu();
     }
 
-    // EFFECTS: prints error message and returns to workouts menu if no workouts created,
+    // EFFECTS: prints error message and returns to the workouts menu if no workouts created,
     // otherwise prints workout history menu with options, and prompts user input
     private void printWorkoutHistoryMenu() {
         if (workoutHistory.getWorkouts().isEmpty()) {
@@ -156,16 +156,13 @@ public class Tracker {
 
     // MODIFIES: this
     // EFFECTS: creates a new workout based on prompted user inputs, and prints workout details,
-    // then redirects to workouts history
+    // then redirects to the workouts history
     private void createWorkout() {
         Workout workout;
 
-        System.out.println("Entering workout date");
-        System.out.print("Enter year: ");
+        System.out.println("Enter workout date: (format YYYY MM DD separated by spaces) ");
         int year = input.nextInt();
-        System.out.print("Enter month: ");
         int month = input.nextInt();
-        System.out.print("Enter day: ");
         int day = input.nextInt();
         System.out.print("Enter workout type: ");
         String workoutType = input.next();
@@ -267,62 +264,43 @@ public class Tracker {
         System.out.print("Enter new " + fieldName + ": ");
     }
 
+    // EFFECTS: edits the selected exercise's specified field and updates to given new value
+    private void editExerciseSetter(Exercise e, String field) {
+        switch (field) {
+            case NAME_COMMAND:
+                e.setName(input.next());
+                break;
+            case TYPE_COMMAND:
+                e.setExerciseType(input.next());
+                break;
+            case WEIGHT_COMMAND:
+                e.setWeight(input.nextDouble());
+                break;
+            case SETS_COMMAND:
+                e.setSets(input.nextInt());
+                break;
+            case REPS_COMMAND:
+                e.setReps(input.nextInt());
+                break;
+            case REST_TIME_COMMAND:
+                e.setRestTime(input.nextInt());
+                break;
+            case NOTE_COMMAND:
+                e.setNote(input.next());
+                break;
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: edits then prints updated exercise details
-    private void editExercise(Exercise e, String field) { //TODO: abstract to make shorter! or suppress warnings
+    private void editExercise(Exercise e, String field) {
         editExercisePrompts(e, field);
-        if (field.equals(NAME_COMMAND) || field.equals(TYPE_COMMAND) || field.equals(WEIGHT_COMMAND)) {
-            editExerciseSub1(e, field);
-        } else {
-            editExerciseSub2(e, field);
-        }
+        editExerciseSetter(e, field);
         printSelectedExercise(e);
     }
 
-    // EFFECTS: edits the selected exercise's specified field (out of first grouping of fields),
-    // and updates to given new value,
-    private void editExerciseSub1(Exercise e, String field) {
-        switch (field) {
-            case NAME_COMMAND:
-                String name = input.next();
-                e.setName(name);
-                break;
-            case TYPE_COMMAND:
-                String type = input.next();
-                e.setExerciseType(type);
-                break;
-            case WEIGHT_COMMAND:
-                double weight = input.nextDouble();
-                e.setWeight(weight);
-                break;
-        }
-    }
-
-    // EFFECTS: edits the selected exercise's specified field (out of first grouping of fields),
-    // and updates to given new value,
-    private void editExerciseSub2(Exercise e, String field) {
-        switch (field) {
-            case SETS_COMMAND:
-                int sets = input.nextInt();
-                e.setSets(sets);
-                break;
-            case REPS_COMMAND:
-                int reps = input.nextInt();
-                e.setReps(reps);
-                break;
-            case REST_TIME_COMMAND:
-                int restTime = input.nextInt();
-                e.setRestTime(restTime);
-                break;
-            case NOTE_COMMAND:
-                String note = input.next();
-                e.setNote(note);
-                break;
-        }
-    }
-
     // MODIFIES: this
-    // EFFECTS: deletes selected exercise from list of exercises, then redirects to exercise list
+    // EFFECTS: deletes selected exercise from list of exercises, then redirects to the exercise list
     private void deleteExercise(Exercise e) {
         exerciseList.delete(e);
         printExerciseList();
@@ -330,7 +308,7 @@ public class Tracker {
     }
 
     // EFFECTS: prints filtered list of exercises, filtering by type specified by user input,
-    // then returns to exercises menu
+    // then returns to the exercises menu
     private void filterExercises() {
         System.out.print("Enter the exercise type to filter for: ");
         String exerciseType = input.next();
@@ -414,33 +392,33 @@ public class Tracker {
         System.out.print("Enter new " + fieldName  + ": ");
     }
 
+    // EFFECTS: edits the selected workout's specified field and updates to given new value
+    private void editWorkoutSetter(Workout w, String field) {
+        switch (field) {
+            case DATE_COMMAND:
+                System.out.print("(format YYYY MM DD separated by spaces) ");
+                w.setDate(input.nextInt(), input.nextInt(), input.nextInt());
+                break;
+            case TYPE_COMMAND:
+                w.setWorkoutType(input.next());
+                break;
+            case LOCATION_COMMAND:
+                w.setLocation(input.next());
+                break;
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: edits the selected exercise's specified field and updates to given new value,
     // then prints updated exercise details
     private void editWorkout(Workout w, String field) {
         editWorkoutPrompts(w, field);
-        switch (field) {
-            case DATE_COMMAND:
-                System.out.print("(enter in format YYYY MM DD) ");
-                int year = input.nextInt();
-                int month = input.nextInt();
-                int day = input.nextInt();
-                w.setDate(year, month, day);
-                break;
-            case TYPE_COMMAND:
-                String type = input.next();
-                w.setWorkoutType(type);
-                break;
-            case LOCATION_COMMAND:
-                String location = input.next();
-                w.setLocation(location);
-                break;
-        }
+        editWorkoutSetter(w, field);
         printSelectedWorkout(w);
     }
 
     // EFFECTS: prints workout details and the names of the exercises in the workout,
-    // then redirects to workout exercises menu
+    // then redirects to the workout exercises menu
     private void printWorkoutExercises(Workout w) {
         if (w.listExercises().isEmpty()) {
             System.out.println(w.workoutDetails());
@@ -459,7 +437,7 @@ public class Tracker {
         handleWorkoutExercisesInput(w);
     }
 
-    // EFFECTS: adds exercise to workout and prints updated workout details
+    // EFFECTS: adds exercise to the workout and prints updated workout details
     private void addExerciseToWorkout(Workout w) {
         printExerciseList();
         System.out.print("Enter the number of the exercise you would like to add: ");
@@ -491,7 +469,7 @@ public class Tracker {
     }
 
     // EFFECTS: prints sorted list of exercises, sorting by latest date first,
-    // then returns to workouts menu
+    // then returns to the workouts menu
     private void sortWorkouts() {
         for (String s : workoutHistory.sortByDate()) {
             System.out.println("- " + s);
@@ -500,7 +478,7 @@ public class Tracker {
     }
 
     // EFFECTS: prints filtered list of exercises, filtering by type specified by user input,
-    // then returns to workouts meu
+    // then returns to the workouts meu
     private void filterWorkouts() {
         System.out.print("Enter the workout type to filter for: ");
         String workoutType = input.next();
@@ -588,7 +566,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input based on options from the main menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input based on options from the main menu, redirects to the appropriate menu or functionality
     private void handleMainInput() {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -605,7 +583,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the exercises menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the exercises menu, redirects to the appropriate menu or functionality
     private void handleExercisesInput() {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -626,7 +604,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the workouts menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the workouts menu, redirects to the appropriate menu or functionality
     private void handleWorkoutsInput() {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -646,7 +624,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the exercise list menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the exercise list menu, redirects to the appropriate menu or functionality
     private void handleExerciseListInput() {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -666,7 +644,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the workout history menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the workout history menu, redirects to the appropriate menu or functionality
     private void handleWorkoutHistoryInput() {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -689,7 +667,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the select exercise menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the select exercise menu, redirects to the appropriate menu or functionality
     private void handleSelectExerciseInput(Exercise e) {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -710,7 +688,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the select workout menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the select workout menu, redirects to the appropriate menu or functionality
     private void handleSelectWorkoutInput(Workout w) {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -730,7 +708,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the edit exercise menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the edit exercise menu, redirects to the appropriate menu or functionality
     private void handleEditExerciseInput(Exercise e) {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -746,7 +724,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the edit workout menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the edit workout menu, redirects to the appropriate menu or functionality
     private void handleEditWorkoutInput(Workout w) {
         String str = getUserInputString();
         if (!str.isEmpty()) {
@@ -760,7 +738,7 @@ public class Tracker {
         }
     }
 
-    // EFFECTS: handles input from the workout exercises menu, redirects to appropriate menu or functionality
+    // EFFECTS: handles input from the workout exercises menu, redirects to the appropriate menu or functionality
     private void handleWorkoutExercisesInput(Workout w) {
         String str = getUserInputString();
         if (!str.isEmpty()) {
