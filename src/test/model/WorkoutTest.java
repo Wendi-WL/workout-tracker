@@ -68,6 +68,17 @@ public class WorkoutTest {
     }
 
     @Test
+    public void formattedDateTest() {
+        assertEquals("2024-1-2", testWorkout.formattedDate());
+    }
+
+    @Test
+    public void formattedDateAfterNewSettingsTest() {
+        testWorkout.setDate(2023,11, 30);
+        assertEquals("2023-11-30", testWorkout.formattedDate());
+    }
+
+    @Test
     public void workoutDetailsTest() {
         assertEquals("2024-1-2 full body workout at ARC", testWorkout.workoutDetails());
     }

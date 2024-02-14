@@ -10,7 +10,7 @@ public class Workout extends ExerciseList {
     private String location;
     private List<Exercise> exercises;
 
-    // REQUIRES: year > 0, 1 <= month <= 12, 1 <= day <= 31
+    // REQUIRES: year > 0, 1 <= month <= 12, 1 <= day <= 31, workoutType is non-empty, location is non-empty
     // EFFECTS: constructs a new instance of Workout, initialized with parameters and an empty list of exercises
     public Workout(int year, int month, int day, String workoutType, String location) {
         date = new ArrayList<>();
@@ -69,10 +69,14 @@ public class Workout extends ExerciseList {
         exercises.remove(e);
     }
 
+    // EFFECTS: returns a String of a formatted date
+    public String formattedDate() {
+        return getDate().get(0) + "-" + getDate().get(1) + "-" + getDate().get(2);
+    }
+
     // EFFECTS: returns a String of the workout details, not including its exercises
     public String workoutDetails() {
-        return getDate().get(0) + "-" + getDate().get(1) + "-" + getDate().get(2)
-                + " " + getWorkoutType() + " workout at " + getLocation();
+        return formattedDate() + " " + getWorkoutType() + " workout at " + getLocation();
     }
 
     // EFFECTS: returns a list of names of the exercises in the workout
