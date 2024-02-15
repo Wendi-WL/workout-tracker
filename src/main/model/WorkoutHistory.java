@@ -53,9 +53,6 @@ public class WorkoutHistory {
         for (Workout w : remainingWorkouts) {
             int position = 0;
             for (Workout sw : sortedWorkouts) {
-                if (w.getDate().equals(sw.getDate())) {
-                    break;
-                }
                 for (int i = 0; i <= 2; i++) {
                     if (w.getDate().get(i) > sw.getDate().get(i)) {
                         break;
