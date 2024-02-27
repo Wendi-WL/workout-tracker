@@ -26,3 +26,8 @@ As a user, I want to be able to:
 - view the list of workouts in my workout history, and be able to sort by date or filter by workout type
 - select a workout in my workout history and view its details and its exercises
 - select a workout or an exercise and add to or edit the details of the workout or the exercise
+
+### Data Persistence User Stories
+As a user:
+- when I quit the application, I want to be given the **option** to save my exercises and workouts to file 
+- when I start the application, I want to be given the **option** to load my exercises and workouts from file
