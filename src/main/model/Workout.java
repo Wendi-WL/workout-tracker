@@ -8,7 +8,7 @@ public class Workout extends ExerciseList {
     private List<Integer> date;
     private String workoutType;
     private String location;
-    private List<Exercise> exercises;
+    private final List<Exercise> exercises;
 
     // REQUIRES: year > 0, 1 <= month <= 12, 1 <= day <= 31, workoutType, location are non-empty with no spaces
     // EFFECTS: constructs a new instance of Workout, initialized with parameters and an empty list of exercises
@@ -40,6 +40,7 @@ public class Workout extends ExerciseList {
     }
 
     //setters
+    // MODIFIES: this
     public void setDate(int year, int month, int day) {
         List<Integer> newDate = new ArrayList<>();
         newDate.add(year);
@@ -48,10 +49,12 @@ public class Workout extends ExerciseList {
         date = newDate;
     }
 
+    // MODIFIES: this
     public void setWorkoutType(String workoutType) {
         this.workoutType = workoutType;
     }
 
+    // MODIFIES: this
     public void setLocation(String location) {
         this.location = location;
     }

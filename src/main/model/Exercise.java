@@ -53,30 +53,37 @@ public class Exercise {
     }
 
     //setters
+    // MODIFIES: this
     public void setName(String name) {
         this.name = name;
     }
 
+    // MODIFIES: this
     public void setExerciseType(String exerciseType) {
         this.exerciseType = exerciseType;
     }
 
+    // MODIFIES: this
     public void setWeight(double weight) {
         this.weight = weight;
     }
 
+    // MODIFIES: this
     public void setSets(int sets) {
         this.sets = sets;
     }
 
+    // MODIFIES: this
     public void setReps(int reps) {
         this.reps = reps;
     }
 
+    // MODIFIES: this
     public void setRestTime(int restTime) {
         this.restTime = restTime;
     }
 
+    // MODIFIES: this
     public void setNote(String note) {
         this.note = note;
     }

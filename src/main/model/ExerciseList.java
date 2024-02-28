@@ -6,7 +6,7 @@ import java.util.List;
 // Represents a list that stores all created exercises
 public class ExerciseList {
 
-    private List<Exercise> exerciseList;
+    private final List<Exercise> exerciseList;
 
     // EFFECTS: constructs a new instance of ExerciseList, initialized as an empty list of exercises
     public ExerciseList() {

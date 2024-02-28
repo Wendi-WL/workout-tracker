@@ -5,7 +5,7 @@ import java.util.*;
 // Represents a workout history of past workouts
 public class WorkoutHistory {
 
-    private List<Workout> workouts;
+    private final List<Workout> workouts;
 
     // EFFECTS: constructs a new instance of WorkoutHistory, initialized as an empty list of workouts
     public WorkoutHistory() {
