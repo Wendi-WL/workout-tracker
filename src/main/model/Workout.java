@@ -3,12 +3,12 @@ package model;
 import java.util.*;
 
 // Represents a workout with details of its date, type, location, and a list of the exercises in the workout
-public class Workout extends ExerciseList {
+public class Workout {
 
     private List<Integer> date;
     private String workoutType;
     private String location;
-    private final List<Exercise> exercises;
+    private final ExerciseList exercises;
 
     // REQUIRES: year > 0, 1 <= month <= 12, 1 <= day <= 31, workoutType, location are non-empty with no spaces
     // EFFECTS: constructs a new instance of Workout, initialized with parameters and an empty list of exercises
@@ -19,7 +19,7 @@ public class Workout extends ExerciseList {
         date.add(day);
         this.workoutType = workoutType;
         this.location = location;
-        exercises = new ArrayList<>();
+        exercises = new ExerciseList();
     }
 
     //getters
@@ -35,7 +35,7 @@ public class Workout extends ExerciseList {
         return location;
     }
 
-    public List<Exercise> getExercises() {
+    public ExerciseList getExercises() {
         return exercises;
     }
 
@@ -62,14 +62,14 @@ public class Workout extends ExerciseList {
     // MODIFIES: this
     // EFFECTS: adds the exercise to the list of exercises in this workout
     public void addExercise(Exercise e) {
-        exercises.add(e);
+        exercises.create(e);
     }
 
     // REQUIRES: e is in exercises
     // MODIFIES: this
     // EFFECTS: removes the exercise from the list of exercises in this workout
     public void removeExercise(Exercise e) {
-        exercises.remove(e);
+        exercises.delete(e);
     }
 
     // EFFECTS: returns a String of a formatted date
@@ -82,16 +82,10 @@ public class Workout extends ExerciseList {
         return formattedDate() + " " + getWorkoutType() + " workout at " + getLocation();
     }
 
-    // EFFECTS: returns a list of names of the exercises in the workout
-    @Override
-    public List<String> listExercises() {
-        return listExercises(exercises);
-    }
-
     // EFFECTS: returns the details of and the list of exercises in the workout
     public String workoutDetailsAndExercises() {
         StringBuilder exerciseNames = new StringBuilder();
-        for (String s : listExercises()) {
+        for (String s : exercises.listExerciseNames()) {
             exerciseNames.append(s).append(", ");
         }
         exerciseNames = new StringBuilder(exerciseNames.substring(0, exerciseNames.length() - 2));

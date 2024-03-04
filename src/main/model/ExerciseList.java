@@ -38,7 +38,7 @@ public class ExerciseList {
     }
 
     // EFFECTS: returns a list of names of the exercises in le
-    public List<String> listExercises(List<Exercise> le) {
+    public List<String> listExerciseNames(List<Exercise> le) {
         List<String> exerciseNames = new ArrayList<>();
         for (Exercise e : le) {
             exerciseNames.add(e.getName());
@@ -47,8 +47,8 @@ public class ExerciseList {
     }
 
     // EFFECTS: returns a list of names of the exercises in the exerciseList (all created exercises)
-    public List<String> listExercises() {
-        return listExercises(exerciseList);
+    public List<String> listExerciseNames() {
+        return listExerciseNames(exerciseList);
     }
 
     // MODIFIES: this
@@ -60,7 +60,7 @@ public class ExerciseList {
                 filteredExerciseList.add(e);
             }
         }
-        return listExercises(filteredExerciseList);
+        return listExerciseNames(filteredExerciseList);
     }
 
 }

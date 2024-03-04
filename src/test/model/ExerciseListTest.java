@@ -98,20 +98,20 @@ public class ExerciseListTest {
     public void listExercisesTest() {
         testExerciseList.create(testExercise1);
         testExerciseList.create(testExercise2);
-        assertEquals("exercise1", testExerciseList.listExercises().get(0));
-        assertEquals("exercise2", testExerciseList.listExercises().get(1));
+        assertEquals("exercise1", testExerciseList.listExerciseNames().get(0));
+        assertEquals("exercise2", testExerciseList.listExerciseNames().get(1));
     }
 
     @Test
     public void listExercisesWithRemovalTest() {
         testExerciseList.create(testExercise1);
         testExerciseList.create(testExercise2);
-        assertEquals(2, testExerciseList.listExercises().size());
-        assertEquals("exercise1", testExerciseList.listExercises().get(0));
-        assertEquals("exercise2", testExerciseList.listExercises().get(1));
+        assertEquals(2, testExerciseList.listExerciseNames().size());
+        assertEquals("exercise1", testExerciseList.listExerciseNames().get(0));
+        assertEquals("exercise2", testExerciseList.listExerciseNames().get(1));
         testExerciseList.delete(testExercise1);
-        assertEquals(1, testExerciseList.listExercises().size());
-        assertEquals("exercise2", testExerciseList.listExercises().get(0));
+        assertEquals(1, testExerciseList.listExerciseNames().size());
+        assertEquals("exercise2", testExerciseList.listExerciseNames().get(0));
     }
 
     @Test

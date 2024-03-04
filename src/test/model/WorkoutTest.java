@@ -25,46 +25,46 @@ public class WorkoutTest {
         assertEquals(2, testWorkout.getDate().get(2));
         assertEquals("full body", testWorkout.getWorkoutType());
         assertEquals("ARC", testWorkout.getLocation());
-        assertEquals(0, testWorkout.getExercises().size());
+        assertEquals(0, testWorkout.getExercises().getExerciseList().size());
     }
 
     @Test
     public void addExerciseOnceTest() {
         testWorkout.addExercise(testExercise1);
-        assertEquals(1, testWorkout.getExercises().size());
-        assertEquals(testExercise1, testWorkout.getExercises().get(0));
+        assertEquals(1, testWorkout.getExercises().getExerciseList().size());
+        assertEquals(testExercise1, testWorkout.getExercises().getExerciseList().get(0));
     }
 
     @Test
     public void addExerciseMultipleTest() {
         testWorkout.addExercise(testExercise1);
         testWorkout.addExercise(testExercise2);
-        assertEquals(2, testWorkout.getExercises().size());
-        assertEquals(testExercise1, testWorkout.getExercises().get(0));
-        assertEquals(testExercise2, testWorkout.getExercises().get(1));
+        assertEquals(2, testWorkout.getExercises().getExerciseList().size());
+        assertEquals(testExercise1, testWorkout.getExercises().getExerciseList().get(0));
+        assertEquals(testExercise2, testWorkout.getExercises().getExerciseList().get(1));
     }
 
     @Test
     public void removeExerciseOnceTest() {
         testWorkout.addExercise(testExercise1);
-        assertEquals(1, testWorkout.getExercises().size());
-        assertEquals(testExercise1, testWorkout.getExercises().get(0));
+        assertEquals(1, testWorkout.getExercises().getExerciseList().size());
+        assertEquals(testExercise1, testWorkout.getExercises().getExerciseList().get(0));
         testWorkout.removeExercise(testExercise1);
-        assertEquals(0, testWorkout.getExercises().size());
+        assertEquals(0, testWorkout.getExercises().getExerciseList().size());
     }
 
     @Test
     public void removeExerciseMultipleTest() {
         testWorkout.addExercise(testExercise1);
         testWorkout.addExercise(testExercise2);
-        assertEquals(2, testWorkout.getExercises().size());
-        assertEquals(testExercise1, testWorkout.getExercises().get(0));
-        assertEquals(testExercise2, testWorkout.getExercises().get(1));
+        assertEquals(2, testWorkout.getExercises().getExerciseList().size());
+        assertEquals(testExercise1, testWorkout.getExercises().getExerciseList().get(0));
+        assertEquals(testExercise2, testWorkout.getExercises().getExerciseList().get(1));
         testWorkout.removeExercise(testExercise1);
-        assertEquals(1, testWorkout.getExercises().size());
-        assertEquals(testExercise2, testWorkout.getExercises().get(0));
+        assertEquals(1, testWorkout.getExercises().getExerciseList().size());
+        assertEquals(testExercise2, testWorkout.getExercises().getExerciseList().get(0));
         testWorkout.removeExercise(testExercise2);
-        assertEquals(0, testWorkout.getExercises().size());
+        assertEquals(0, testWorkout.getExercises().getExerciseList().size());
     }
 
     @Test
@@ -89,26 +89,6 @@ public class WorkoutTest {
         testWorkout.setWorkoutType("lower body");
         testWorkout.setLocation("BirdCoop");
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkout.workoutDetails());
-    }
-
-    @Test
-    public void listExercisesTest() {
-        testWorkout.addExercise(testExercise1);
-        testWorkout.addExercise(testExercise2);
-        assertEquals("exercise1", testWorkout.listExercises().get(0));
-        assertEquals("exercise2", testWorkout.listExercises().get(1));
-    }
-
-    @Test
-    public void listExercisesWithRemovalTest() {
-        testWorkout.addExercise(testExercise1);
-        testWorkout.addExercise(testExercise2);
-        assertEquals(2, testWorkout.listExercises().size());
-        assertEquals("exercise1", testWorkout.listExercises().get(0));
-        assertEquals("exercise2", testWorkout.listExercises().get(1));
-        testWorkout.removeExercise(testExercise1);
-        assertEquals(1, testWorkout.listExercises().size());
-        assertEquals("exercise2", testWorkout.listExercises().get(0));
     }
 
     @Test

@@ -79,7 +79,7 @@ public class Tracker {
         List<String> listToIterate;
         String menu;
         if (listName.equals("exercise list")) {
-            listToIterate = exerciseList.listExercises();
+            listToIterate = exerciseList.listExerciseNames();
             menu = "exercise";
         } else {
             listToIterate = workoutHistory.listWorkoutDetails();
@@ -412,7 +412,7 @@ public class Tracker {
     // EFFECTS: prints workout details and the names of the exercises in the workout,
     // then redirects to the workout exercise menu
     private void printWorkoutExercises(Workout w) {
-        if (w.listExercises().isEmpty()) {
+        if (w.getExercises().listExerciseNames().isEmpty()) {
             System.out.println(w.workoutDetails());
             System.out.println("This workout has no exercises.");
         } else {
@@ -444,18 +444,18 @@ public class Tracker {
 
     // EFFECTS: removes exercise from workout and prints updated workout details
     private void removeExerciseFromWorkout(Workout w) {
-        if (w.listExercises().isEmpty()) {
+        if (w.getExercises().listExerciseNames().isEmpty()) {
             System.out.println("This workout has no exercises. Please add an exercise instead.");
             printWorkoutExercisesMenu(w);
         } else {
             int num = 1;
-            for (String s : w.listExercises()) {
+            for (String s : w.getExercises().listExerciseNames()) {
                 System.out.println(num + ". " + s);
                 num++;
             }
             System.out.println("Enter the number of the exercise you would like to remove: ");
             int exerciseIndex = input.nextInt() - 1;
-            Exercise e = w.getExercises().get(exerciseIndex);
+            Exercise e = w.getExercises().getExerciseList().get(exerciseIndex);
             w.removeExercise(e);
             System.out.println(e.getName() + " has been removed from the workout.");
             printWorkoutExercises(w);
