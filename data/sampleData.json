@@ -1,6 +1,15 @@
 {
   "exercises": [
     {
+      "name": "e1",
+      "exercise type": "legs",
+      "weight": 27.5,
+      "sets":  3,
+      "reps": 12,
+      "rest time": 60,
+      "note": "sample note"
+    },
+    {
       "name": "e2",
       "exercise type": "arms",
       "weight": 12.5,
@@ -20,6 +29,47 @@
     }
   ],
   "workouts": [
+    {
+      "date": [2023, 2, 3],
+      "workout type": "lower body",
+      "location": "BirdCoop",
+      "exercises": [
+        {
+          "name": "e1",
+          "exercise type": "legs",
+          "weight": 27.5,
+          "sets":  3,
+          "reps": 12,
+          "rest time": 60,
+          "note": "sample note"
+        }
+      ]
+    },
+    {
+      "date": [2024, 1, 1],
+      "workout type": "full body",
+      "location": "ARC",
+      "exercises": [
+        {
+        "name": "e1",
+        "exercise type": "legs",
+        "weight": 27.5,
+        "sets":  3,
+        "reps": 12,
+        "rest time": 60,
+        "note": "sample note"
+        },
+        {
+          "name": "e2",
+          "exercise type": "arms",
+          "weight": 12.5,
+          "sets":  5,
+          "reps": 8,
+          "rest time": 30,
+          "note": "another sample note"
+        }
+      ]
+    },
     {
       "date": [2023, 12, 31],
       "workout type": "upper body",
