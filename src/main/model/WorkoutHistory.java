@@ -1,7 +1,6 @@
 package model;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.*;
 
@@ -82,15 +81,8 @@ public class WorkoutHistory {
         return listWorkoutDetails(filteredWorkouts);
     }
 
-    // EFFECTS: returns workout history as a JSON object
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("workouts", workoutsToJson());
-        return json;
-    }
-
     // EFFECTS: returns workouts in the workout history as a JSON array
-    private JSONArray workoutsToJson() {
+    public JSONArray workoutsToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Workout w : workouts) {
             jsonArray.put(w.toJson());

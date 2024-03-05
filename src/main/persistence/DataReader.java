@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 // Represents a reader that reads the exercise list and the workout history from JSON data stored in file
 public class DataReader {
-    private String sourceFile;
+    private final String sourceFile;
 
     // EFFECTS: constructs reader to read from source file
     public DataReader(String sourceFile) {
@@ -22,8 +22,7 @@ public class DataReader {
     // EFFECTS: reads data from file and returns it; throws IOException if an error occurs reading data from file
     public JSONObject readData() throws IOException {
         String jsonData = readFile(sourceFile);
-        JSONObject jsonObject = new JSONObject(jsonData);
-        return jsonObject;
+        return new JSONObject(jsonData);
     }
 
     // EFFECTS: reads exercise list from file and returns it; throws IOException if an error occurs
@@ -41,7 +40,7 @@ public class DataReader {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
         }
 
         return contentBuilder.toString();
@@ -62,7 +61,7 @@ public class DataReader {
     }
 
     // MODIFIES: el
-    // EFFECTS: parses exercises from JSON object and adds them to exercise list
+    // EFFECTS: parses exercises from JSON array and adds them to exercise list
     private void addExercises(ExerciseList el, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("exercises");
         for (Object json : jsonArray) {
@@ -71,8 +70,8 @@ public class DataReader {
         }
     }
 
-    // MODIFIES: el
-    // EFFECTS: parses exercises from JSON object and adds them to exercise list
+    // MODIFIES: w
+    // EFFECTS: parses exercises from JSON array and adds them to the workout's exercises
     private void addExercises(Workout w, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("exercises");
         for (Object json : jsonArray) {
@@ -82,7 +81,7 @@ public class DataReader {
     }
 
     // MODIFIES: wh
-    // EFFECTS: parses workouts from JSON object and adds them to workout history
+    // EFFECTS: parses workouts from JSON array and adds them to workout history
     private void addWorkouts(WorkoutHistory wh, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("workouts");
         for (Object json : jsonArray) {
@@ -92,7 +91,18 @@ public class DataReader {
     }
 
     // MODIFIES: el
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // EFFECTS: parses exercise from JSON object and adds it to exercise list
+    private void addExercise(ExerciseList el, JSONObject jsonObject) {
+        el.create(parseExercise(jsonObject));
+    }
+
+    // MODIFIES: w
+    // EFFECTS: parses exercise from JSON object and adds it to the workout's exercises
+    private void addExercise(Workout w, JSONObject jsonObject) {
+        w.addExercise(parseExercise(jsonObject));
+    }
+
+    // EFFECTS: parses exercise from JSON object and returns it
     private Exercise parseExercise(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         String exerciseType = jsonObject.getString("exercise type");
@@ -108,18 +118,8 @@ public class DataReader {
         return e;
     }
 
-    private void addExercise(ExerciseList el, JSONObject jsonObject) {
-        el.create(parseExercise(jsonObject));
-    }
-
-    // MODIFIES: w
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
-    private void addExercise(Workout w, JSONObject jsonObject) {
-        w.addExercise(parseExercise(jsonObject));
-    }
-
     // MODIFIES: wh
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // EFFECTS: parses workout from JSON array and adds it to workout history
     private void addWorkout(WorkoutHistory wh, JSONObject jsonObject) {
         JSONArray date = jsonObject.getJSONArray("date");
         int year = date.getInt(0);

@@ -12,11 +12,10 @@ public class DataReaderTest extends DataCheckerTest {
     private ExerciseList el;
     private WorkoutHistory wh;
     private DataReader reader;
-    private Exercise e2 = new Exercise("e2", "arms", 12.5, 5, 8, 30);
 
     @Test
-    void testReaderNonExistentFile() {
-        DataReader reader = new DataReader("./data/nonexistent.json");
+    void readNonExistentFileTest() {
+        reader = new DataReader("./data/nonexistent.json");
         try {
             el = reader.readExerciseList();
             wh = reader.readWorkoutHistory();
@@ -27,8 +26,8 @@ public class DataReaderTest extends DataCheckerTest {
     }
 
     @Test
-    void testReaderEmptyWorkRoom() {
-        DataReader reader = new DataReader("./data/readerEmptyTest.json");
+    void readEmptyFileTest() {
+        reader = new DataReader("./data/readerEmptyTest.json");
         try {
             el = reader.readExerciseList();
             wh = reader.readWorkoutHistory();
@@ -40,13 +39,14 @@ public class DataReaderTest extends DataCheckerTest {
     }
 
     @Test
-    void testReaderGeneralWorkRoom() {
-        DataReader reader = new DataReader("./data/readerGeneralTest.json");
+    void readGeneralFileTest() {
+        reader = new DataReader("./data/readerGeneralTest.json");
         try {
             el = reader.readExerciseList();
             wh = reader.readWorkoutHistory();
             List<Exercise> exercises = el.getExerciseList();
             List<Workout> workouts = wh.getWorkouts();
+
             assertEquals(3, exercises.size());
             assertEquals(1, workouts.size());
 
@@ -56,8 +56,13 @@ public class DataReaderTest extends DataCheckerTest {
                     "another sample note", exercises.get(1));
             checkExercise("e3", "core", 0, 4, 15, 60,
                     "", exercises.get(2));
-//            checkWorkout(2023, 12, 31, "upper body", "BirdCoop",
-//                    exercises.subList(1, 3), workouts.get(0));
+
+            checkWorkout(2023, 12, 31, "upper body", "BirdCoop", workouts.get(0));
+            assertEquals(2, workouts.get(0).getExercises().getExerciseList().size());
+            checkExercise("e2", "arms", 12.5, 5, 8, 30,
+                    "another sample note", workouts.get(0).getExercises().getExerciseList().get(0));
+            checkExercise("e3", "core", 0, 4, 15, 60,
+                    "", workouts.get(0).getExercises().getExerciseList().get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

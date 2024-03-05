@@ -10,7 +10,7 @@ import java.io.*;
 public class DataWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
-    private String destinationFile;
+    private final String destinationFile;
 
     // EFFECTS: constructs writer to write to destination file
     public DataWriter(String destinationFile) {
@@ -20,27 +20,16 @@ public class DataWriter {
     // MODIFIES: this
     // EFFECTS: opens writer, throwing FileNotFoundException if destination cannot be opened for writing
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(destinationFile));
+        writer = new PrintWriter(destinationFile);
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation to destination file
-    public void write(JSONObject jo) {
-        saveToFile(jo.toString(TAB));
-    }
-
-    // MODIFIES: this
-    // EFFECTS: writes JSON representation of exercise list to file
-    public void write(ExerciseList el) {
-        JSONObject json = el.toJson();
-        write(json);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: writes JSON representation of workout history to file
-    public void write(WorkoutHistory wh) {
-        JSONObject json = wh.toJson();
-        write(json);
+    // EFFECTS: writes JSON representation of exercises and workouts to destination file
+    public void write(ExerciseList el, WorkoutHistory wh) {
+        JSONObject json = new JSONObject();
+        json.put("exercises", el.exercisesToJson());
+        json.put("workouts", wh.workoutsToJson());
+        saveToFile(json.toString(TAB));
     }
 
     // MODIFIES: this

@@ -100,7 +100,7 @@ public class Workout {
         json.put("date", date);
         json.put("workout type", workoutType);
         json.put("location", location);
-        json.put("exercises", exercises.toJson());
+        json.put("exercises", exercises.exercisesToJson());
         return json;
     }
 }
