@@ -1,6 +1,15 @@
 {
   "exercises": [
     {
+      "name": "e1",
+      "exercise type": "legs",
+      "weight": 27.5,
+      "sets":  3,
+      "reps": 12,
+      "rest time": 60,
+      "note": "sample note"
+    },
+    {
       "name": "e2",
       "exercise type": "arms",
       "weight": 12.5,
@@ -39,22 +48,6 @@
           "exercise type": "core",
           "weight": 0,
           "sets":  4,
-          "reps": 15,
-          "rest time": 60,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "date": [2024, 3, 1],
-      "workout type": "core",
-      "location": "ARC",
-      "exercises": [
-        {
-          "name": "e3",
-          "exercise type": "core",
-          "weight": 0,
-          "sets": 4,
           "reps": 15,
           "rest time": 60,
           "note": ""

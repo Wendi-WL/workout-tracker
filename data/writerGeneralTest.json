@@ -1,65 +1,68 @@
-{
-  "exercises": [
+{"exercises": [
     {
-      "name": "e1",
-      "exercise type": "legs",
-      "weight": 27.5,
-      "sets":  3,
-      "reps": 12,
-      "rest time": 60,
-      "note": "sample note"
+        "rest time": 60,
+        "note": "sample note",
+        "reps": 12,
+        "sets": 3,
+        "exercise type": "legs",
+        "name": "e1",
+        "weight": 27.5
     },
     {
-      "name": "e2",
-      "exercise type": "arms",
-      "weight": 12.5,
-      "sets":  5,
-      "reps": 8,
-      "rest time": 30,
-      "note": "another sample note"
+        "rest time": 30,
+        "note": "another sample note",
+        "reps": 8,
+        "sets": 5,
+        "exercise type": "arms",
+        "name": "e2",
+        "weight": 12.5
     }
-  ],
-  "workouts": [
+]}{"workouts": [
     {
-      "date": [2023, 2, 3],
-      "workout type": "lower body",
-      "location": "BirdCoop",
-      "exercises": [
-        {
-          "name": "e1",
-          "exercise type": "legs",
-          "weight": 27.5,
-          "sets":  3,
-          "reps": 12,
-          "rest time": 60,
-          "note": "sample note"
-        }
-      ]
+        "date": [
+            2023,
+            2,
+            3
+        ],
+        "exercises": {"exercises": [{
+            "rest time": 60,
+            "note": "sample note",
+            "reps": 12,
+            "sets": 3,
+            "exercise type": "legs",
+            "name": "e1",
+            "weight": 27.5
+        }]},
+        "location": "BirdCoop",
+        "workout type": "lower body"
     },
     {
-      "date": [2024, 1, 1],
-      "workout type": "full body",
-      "location": "ARC",
-      "exercises": [
-        {
-          "name": "e1",
-          "exercise type": "legs",
-          "weight": 27.5,
-          "sets":  3,
-          "reps": 12,
-          "rest time": 60,
-          "note": "sample note"
-        },
-        {
-          "name": "e2",
-          "exercise type": "arms",
-          "weight": 12.5,
-          "sets":  5,
-          "reps": 8,
-          "rest time": 30,
-          "note": "another sample note"
-        }
-      ]
+        "date": [
+            2024,
+            1,
+            1
+        ],
+        "exercises": {"exercises": [
+            {
+                "rest time": 60,
+                "note": "sample note",
+                "reps": 12,
+                "sets": 3,
+                "exercise type": "legs",
+                "name": "e1",
+                "weight": 27.5
+            },
+            {
+                "rest time": 30,
+                "note": "another sample note",
+                "reps": 8,
+                "sets": 5,
+                "exercise type": "arms",
+                "name": "e2",
+                "weight": 12.5
+            }
+        ]},
+        "location": "ARC",
+        "workout type": "full body"
     }
-  ]
-}
+]}

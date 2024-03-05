@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Represents an exercise with details of its name, type, weight, sets, reps, rest time, and additional notes
 public class Exercise {
 
@@ -94,6 +96,19 @@ public class Exercise {
                 + "Weight: " + weight + "lbs\n"
                 + "Sets: " + sets + ", Reps: " + reps + ", Rest time: " + restTime + " seconds\n"
                 + "Notes: " + note;
+    }
+
+    // EFFECTS: returns exercise as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("exercise type", exerciseType);
+        json.put("weight", weight);
+        json.put("sets", sets);
+        json.put("reps", reps);
+        json.put("rest time", restTime);
+        json.put("note", note);
+        return json;
     }
 
 }

@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.util.*;
 
 // Represents a workout with details of its date, type, location, and a list of the exercises in the workout
@@ -90,5 +92,15 @@ public class Workout {
         }
         exerciseNames = new StringBuilder(exerciseNames.substring(0, exerciseNames.length() - 2));
         return workoutDetails() + "\n" + "Exercises: " + exerciseNames;
+    }
+
+    // EFFECTS: returns workout as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("date", date);
+        json.put("workout type", workoutType);
+        json.put("location", location);
+        json.put("exercises", exercises.toJson());
+        return json;
     }
 }

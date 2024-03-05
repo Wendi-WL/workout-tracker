@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,4 +66,19 @@ public class ExerciseList {
         return listExerciseNames(filteredExerciseList);
     }
 
+    // EFFECTS: returns exercise list as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("exercises", exercisesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns exercises in the exercise list as a JSON array
+    private JSONArray exercisesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Exercise e : exerciseList) {
+            jsonArray.put(e.toJson());
+        }
+        return jsonArray;
+    }
 }
