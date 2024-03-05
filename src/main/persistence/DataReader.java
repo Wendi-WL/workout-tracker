@@ -20,7 +20,7 @@ public class DataReader {
     }
 
     // EFFECTS: reads data from file and returns it; throws IOException if an error occurs reading data from file
-    public JSONObject readData() throws IOException {
+    private JSONObject readData() throws IOException {
         String jsonData = readFile(sourceFile);
         return new JSONObject(jsonData);
     }
