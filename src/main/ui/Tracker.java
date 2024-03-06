@@ -1,16 +1,22 @@
 package ui;
 
 import model.*;
+import persistence.DataReader;
+import persistence.DataWriter;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 // Workout Tracker Application
 public class Tracker {
 
+    private static final String LOAD_COMMAND = "load";
+    private static final String NO_COMMAND = "no";
+    private static final String QUIT_COMMAND = "q";
+    private static final String SAVE_COMMAND = "save";
     private static final String EXERCISE_COMMAND = "e";
     private static final String WORKOUT_COMMAND = "w";
-    private static final String QUIT_COMMAND = "q";
     private static final String CREATE_NEW_COMMAND = "create";
     private static final String VIEW_COMMAND = "view";
     private static final String BACK_COMMAND = "back";
@@ -31,9 +37,11 @@ public class Tracker {
     private static final String DATE_COMMAND = "d";
     private static final String LOCATION_COMMAND = "l";
 
-    private final ExerciseList exerciseList;
-    private final WorkoutHistory workoutHistory;
+    private ExerciseList exerciseList;
+    private WorkoutHistory workoutHistory;
     private final Scanner input;
+    private final DataReader reader = new DataReader("./data/exercisesAndWorkouts.json");
+    private final DataWriter writer = new DataWriter("./data/exercisesAndWorkouts.json");
 
     // EFFECTS: constructs a new Tracker with an ExerciseList, a WorkoutHistory, and a Scanner for user input
     public Tracker() {
@@ -42,10 +50,17 @@ public class Tracker {
         input = new Scanner(System.in);
     }
 
-    // EFFECTS: starts the program by showing welcome message and main menu
+    // EFFECTS: starts the program by printing a welcome message then printing load option
     public void runProgram() {
         System.out.println("Welcome to the Workout Tracker!");
-        printMainMenu();
+        printLoadOption();
+    }
+
+    // EFFECTS: prints option to load data from previous save file
+    private void printLoadOption() {
+        System.out.println("Enter '" + LOAD_COMMAND + "' to load data from previous save file.");
+        System.out.println("Enter '" + NO_COMMAND + "' to skip loading data and create new exercises and workouts.");
+        handleLoadInput();
     }
 
     // EFFECTS: prints main menu with options, and prompts user input
@@ -462,6 +477,14 @@ public class Tracker {
         }
     }
 
+    // EFFECTS: prints option to save data to file before fully quitting application
+    private void printSaveOption() {
+        System.out.println("Before you leave, would you like to save data from this session to file?");
+        System.out.println("Enter '" + SAVE_COMMAND + "' to save data to file.");
+        System.out.println("Enter '" + NO_COMMAND + "' to skip saving data.");
+        handleSaveInput();
+    }
+
     // EFFECTS: re-formats user input String to all lowercase and without leading/trailing spaces or quotation marks
     private String getUserInputString() {
         String str = input.next();
@@ -479,7 +502,7 @@ public class Tracker {
     // EFFECTS: exits program or returns to the appropriate previous menu
     private void handleInput(String str, String menu) {
         if (quitInput(str)) {
-            endProgram();
+            printSaveOption();
         } else {
             System.out.println("Invalid command, please try again.");
             switch (menu) {
@@ -504,7 +527,7 @@ public class Tracker {
     // EFFECTS: exits program or returns to the appropriate previous menu with the selected exercise
     private void handleInput(String str, String menu, Exercise e) {
         if (quitInput(str)) {
-            endProgram();
+            printSaveOption();
         } else {
             System.out.println("Invalid command, please try again.");
             switch (menu) {
@@ -521,7 +544,7 @@ public class Tracker {
     // EFFECTS: exits program or returns to the appropriate previous menu with the selected workouts
     private void handleInput(String str, String menu, Workout w) {
         if (quitInput(str)) {
-            endProgram();
+            printSaveOption();
         } else {
             System.out.println("Invalid command, please try again.");
             switch (menu) {
@@ -531,6 +554,30 @@ public class Tracker {
                     printEditMenu(w);
                 case "workout exercises":
                     printWorkoutExercisesMenu(w);
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles input to load or not load exercise list and workout history from save file at program start
+    private void handleLoadInput() {
+        String str = getUserInputString();
+        if (!str.isEmpty()) {
+            switch (str) {
+                case LOAD_COMMAND:
+                    try {
+                        exerciseList = reader.readExerciseList();
+                        workoutHistory = reader.readWorkoutHistory();
+                    } catch (IOException e) {
+                        System.out.println("File does not exist.");
+                    }
+                    System.out.println("Data loaded from save file.");
+                    printMainMenu();
+                    break;
+                case NO_COMMAND:
+                    System.out.println("Data not loaded.");
+                    printMainMenu();
+                    break;
             }
         }
     }
@@ -561,7 +608,7 @@ public class Tracker {
                     if (menu.equals("exercise")) {
                         printExerciseListOrWorkoutHistory("exercise list");
                         if (!exerciseList.getExerciseList().isEmpty()) {
-                            printExerciseListOrWorkoutHistoryMenu("exercise");
+                            printExerciseOrWorkoutMenu("exercise");
                         }
                     } else {
                         printExerciseListOrWorkoutHistory("workout history");
@@ -620,7 +667,7 @@ public class Tracker {
                 case BACK_COMMAND:
                     printExerciseListOrWorkoutHistory("exercise list");
                     if (!exerciseList.getExerciseList().isEmpty()) {
-                        printExerciseListOrWorkoutHistoryMenu("exercise");
+                        printExerciseOrWorkoutMenu("exercise");
                     }
                     break;
                 default:
@@ -695,6 +742,30 @@ public class Tracker {
                     break;
                 default:
                     handleInput(str, "workout exercises", w);
+            }
+        }
+    }
+
+    // EFFECTS: handles input to save or not save exercise list and workout history to file before program ends
+    private void handleSaveInput() {
+        String str = getUserInputString();
+        if (!str.isEmpty()) {
+            switch (str) {
+                case SAVE_COMMAND:
+                    try {
+                        writer.open();
+                        writer.write(exerciseList, workoutHistory);
+                        writer.close();
+                    } catch (IOException e) {
+                        System.out.println("Cannot save to file with invalid name.");
+                    }
+                    System.out.println("Data saved to file.");
+                    endProgram();
+                    break;
+                case NO_COMMAND:
+                    System.out.println("Data not saved.");
+                    endProgram();
+                    break;
             }
         }
     }
