@@ -157,18 +157,23 @@ public class Tracker {
     // MODIFIES: this
     // EFFECTS: creates a new exercise based on prompted user inputs
     private Exercise createExercise() {
+        input.nextLine();
         System.out.print("Enter exercise name: ");
-        String name = input.next();
+        String name = input.nextLine();
         System.out.print("Enter exercise type: ");
-        String exerciseType = input.next();
+        String exerciseType = input.nextLine();
         System.out.print("Enter weight (in lbs): ");
         double weight = input.nextDouble();
+        input.nextLine();
         System.out.print("Enter sets: ");
         int sets = input.nextInt();
+        input.nextLine();
         System.out.print("Enter reps: ");
         int reps = input.nextInt();
+        input.nextLine();
         System.out.print("Enter rest time (in seconds): ");
         int restTime = input.nextInt();
+        input.nextLine();
 
         Exercise exercise = new Exercise(name, exerciseType, weight, sets, reps, restTime);
         exerciseList.create(exercise);
@@ -178,14 +183,16 @@ public class Tracker {
     // MODIFIES: this
     // EFFECTS: creates a new workout based on prompted user inputs
     private Workout createWorkout() {
+        input.nextLine();
         System.out.println("Enter workout date: (format YYYY MM DD separated by spaces) ");
         int year = input.nextInt();
         int month = input.nextInt();
         int day = input.nextInt();
+        input.nextLine();
         System.out.print("Enter workout type: ");
-        String workoutType = input.next();
+        String workoutType = input.nextLine();
         System.out.print("Enter location: ");
-        String location = input.next();
+        String location = input.nextLine();
 
         Workout workout = new Workout(year, month, day, workoutType, location);
         workoutHistory.addWorkout(workout);
@@ -261,7 +268,14 @@ public class Tracker {
     // EFFECTS: edits then prints updated exercise details
     private void edit(Exercise e, String field) {
         editPrompts(e, field);
+        if (field.equals(NAME_COMMAND) || field.equals(TYPE_COMMAND) || field.equals(NOTE_COMMAND)) {
+            input.nextLine();
+        }
         editSetter(e, field);
+        if (field.equals(WEIGHT_COMMAND)
+                || field.equals(SETS_COMMAND) || field.equals(REPS_COMMAND) || field.equals(REST_TIME_COMMAND)) {
+            input.nextLine();
+        }
         printSelected(e);
     }
 
@@ -270,7 +284,13 @@ public class Tracker {
     // then prints updated exercise details
     private void edit(Workout w, String field) {
         editPrompts(w, field);
+        if (field.equals(TYPE_COMMAND) || field.equals(LOCATION_COMMAND)) {
+            input.nextLine();
+        }
         editSetter(w, field);
+        if (field.equals(DATE_COMMAND)) {
+            input.nextLine();
+        }
         printSelected(w);
     }
 
@@ -339,10 +359,10 @@ public class Tracker {
     private void editSetter(Exercise e, String field) {
         switch (field) {
             case NAME_COMMAND:
-                e.setName(input.next());
+                e.setName(input.nextLine());
                 break;
             case TYPE_COMMAND:
-                e.setExerciseType(input.next());
+                e.setExerciseType(input.nextLine());
                 break;
             case WEIGHT_COMMAND:
                 e.setWeight(input.nextDouble());
@@ -357,7 +377,7 @@ public class Tracker {
                 e.setRestTime(input.nextInt());
                 break;
             case NOTE_COMMAND:
-                e.setNote(input.next());
+                e.setNote(input.nextLine());
                 break;
         }
     }
@@ -370,10 +390,10 @@ public class Tracker {
                 w.setDate(input.nextInt(), input.nextInt(), input.nextInt());
                 break;
             case TYPE_COMMAND:
-                w.setWorkoutType(input.next());
+                w.setWorkoutType(input.nextLine());
                 break;
             case LOCATION_COMMAND:
-                w.setLocation(input.next());
+                w.setLocation(input.nextLine());
                 break;
         }
     }
@@ -608,7 +628,7 @@ public class Tracker {
                     if (menu.equals("exercise")) {
                         printExerciseListOrWorkoutHistory("exercise list");
                         if (!exerciseList.getExerciseList().isEmpty()) {
-                            printExerciseOrWorkoutMenu("exercise");
+                            printExerciseListOrWorkoutHistoryMenu("exercise");
                         }
                     } else {
                         printExerciseListOrWorkoutHistory("workout history");
@@ -667,7 +687,7 @@ public class Tracker {
                 case BACK_COMMAND:
                     printExerciseListOrWorkoutHistory("exercise list");
                     if (!exerciseList.getExerciseList().isEmpty()) {
-                        printExerciseOrWorkoutMenu("exercise");
+                        printExerciseListOrWorkoutHistoryMenu("exercise");
                     }
                     break;
                 default:

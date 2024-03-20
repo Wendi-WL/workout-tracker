@@ -14,7 +14,7 @@ public class Workout {
     private String location;
     private final ExerciseList exercises;
 
-    // REQUIRES: year > 0, 1 <= month <= 12, 1 <= day <= 31, workoutType, location are non-empty with no spaces
+    // REQUIRES: year, month, day make up a valid date
     // EFFECTS: constructs a new instance of Workout, initialized with parameters and an empty list of exercises
     public Workout(int year, int month, int day, String workoutType, String location) {
         date = LocalDate.of(year, month, day);

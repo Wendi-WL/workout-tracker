@@ -13,7 +13,7 @@ public class Exercise {
     private int restTime;
     private String note;
 
-    // REQUIRES: name, exerciseType are non-empty with no spaces, weight >= 0, sets > 0, reps > 0, restTime > 0
+    // REQUIRES: weight >= 0, sets > 0, reps > 0, restTime > 0
     // EFFECTS: constructs a new instance of Exercise, initialized with parameters and empty note
     public Exercise(String name, String exerciseType, double weight, int sets, int reps, int restTime) {
         this.name = name;
