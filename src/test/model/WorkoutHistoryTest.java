@@ -13,8 +13,6 @@ public class WorkoutHistoryTest {
     private Workout differentYearWorkout;
     private Workout differentMonthWorkout;
     private Workout differentDayWorkout;
-    private Exercise testExercise1;
-    private Exercise testExercise2;
 
     @BeforeEach
     public void runBefore() {
@@ -24,8 +22,6 @@ public class WorkoutHistoryTest {
         differentYearWorkout = new Workout(2023, 11, 30, "lower body", "BirdCoop");
         differentMonthWorkout = new Workout(2024, 2, 3, "arms", "ARC");
         differentDayWorkout = new Workout(2024, 1, 1, "legs", "ARC");
-        testExercise1 = new Exercise("exercise1", "legs", 27.5, 3, 12, 90);
-        testExercise2 = new Exercise("exercise2", "full body", 55, 4, 8, 120);
     }
 
     @Test
@@ -78,7 +74,7 @@ public class WorkoutHistoryTest {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkoutHistory.addWorkout(differentYearWorkout);
         assertEquals(2, testWorkoutHistory.listWorkoutDetails().size());
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.listWorkoutDetails().get(1));
     }
 
@@ -86,9 +82,9 @@ public class WorkoutHistoryTest {
     public void sortByDateAlreadySortedTest() {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkoutHistory.addWorkout(differentYearWorkout);
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.listWorkoutDetails().get(1));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.sortByDate().get(1));
     }
 
@@ -96,10 +92,10 @@ public class WorkoutHistoryTest {
     public void sortByDateSameDateTest() {
         testWorkoutHistory.addWorkout(sameDateWorkout);
         testWorkoutHistory.addWorkout(testWorkout);
-        assertEquals("2024-1-2 core workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
-        assertEquals("2024-1-2 core workout at ARC", testWorkoutHistory.sortByDate().get(1));
+        assertEquals("2024-01-02 core workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
+        assertEquals("2024-01-02 core workout at ARC", testWorkoutHistory.sortByDate().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.sortByDate().get(1));
 
     }
 
@@ -108,8 +104,8 @@ public class WorkoutHistoryTest {
         testWorkoutHistory.addWorkout(differentYearWorkout);
         testWorkoutHistory.addWorkout(testWorkout);
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.listWorkoutDetails().get(0));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.sortByDate().get(1));
     }
 
@@ -117,20 +113,20 @@ public class WorkoutHistoryTest {
     public void sortByDateDifferentMonthTest() {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkoutHistory.addWorkout(differentMonthWorkout);
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
-        assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
-        assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.sortByDate().get(0));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(1));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-02-03 arms workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
+        assertEquals("2024-02-03 arms workout at ARC", testWorkoutHistory.sortByDate().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.sortByDate().get(1));
     }
 
     @Test
     public void sortByDateDifferentDayTest() {
         testWorkoutHistory.addWorkout(differentDayWorkout);
         testWorkoutHistory.addWorkout(testWorkout);
-        assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
-        assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.sortByDate().get(1));
+        assertEquals("2024-01-01 legs workout at ARC", testWorkoutHistory.listWorkoutDetails().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.sortByDate().get(0));
+        assertEquals("2024-01-01 legs workout at ARC", testWorkoutHistory.sortByDate().get(1));
     }
 
     @Test
@@ -140,12 +136,12 @@ public class WorkoutHistoryTest {
         testWorkoutHistory.addWorkout(differentDayWorkout);
         testWorkoutHistory.addWorkout(testWorkout);
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.listWorkoutDetails().get(0));
-        assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
-        assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.listWorkoutDetails().get(2));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(3));
-        assertEquals("2024-2-3 arms workout at ARC", testWorkoutHistory.sortByDate().get(0));
-        assertEquals("2024-1-2 full body workout at ARC", testWorkoutHistory.sortByDate().get(1));
-        assertEquals("2024-1-1 legs workout at ARC", testWorkoutHistory.sortByDate().get(2));
+        assertEquals("2024-02-03 arms workout at ARC", testWorkoutHistory.listWorkoutDetails().get(1));
+        assertEquals("2024-01-01 legs workout at ARC", testWorkoutHistory.listWorkoutDetails().get(2));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.listWorkoutDetails().get(3));
+        assertEquals("2024-02-03 arms workout at ARC", testWorkoutHistory.sortByDate().get(0));
+        assertEquals("2024-01-02 full body workout at ARC", testWorkoutHistory.sortByDate().get(1));
+        assertEquals("2024-01-01 legs workout at ARC", testWorkoutHistory.sortByDate().get(2));
         assertEquals("2023-11-30 lower body workout at BirdCoop", testWorkoutHistory.sortByDate().get(3));
     }
 
@@ -154,7 +150,7 @@ public class WorkoutHistoryTest {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkoutHistory.addWorkout(differentYearWorkout);
         assertEquals(1, testWorkoutHistory.filterByType("full body").size());
-        assertEquals("2024-1-2 full body workout at ARC",
+        assertEquals("2024-01-02 full body workout at ARC",
                 testWorkoutHistory.filterByType("full body").get(0));
         assertEquals(1, testWorkoutHistory.filterByType("lower body").size());
         assertEquals("2023-11-30 lower body workout at BirdCoop",

@@ -20,9 +20,9 @@ public class WorkoutTest {
 
     @Test
     public void constructorTest() {
-        assertEquals(2024, testWorkout.getDate().get(0));
-        assertEquals(1, testWorkout.getDate().get(1));
-        assertEquals(2, testWorkout.getDate().get(2));
+        assertEquals(2024, testWorkout.getDate().getYear());
+        assertEquals(1, testWorkout.getDate().getMonthValue());
+        assertEquals(2, testWorkout.getDate().getDayOfMonth());
         assertEquals("full body", testWorkout.getWorkoutType());
         assertEquals("ARC", testWorkout.getLocation());
         assertEquals(0, testWorkout.getExercises().getExerciseList().size());
@@ -69,7 +69,7 @@ public class WorkoutTest {
 
     @Test
     public void formattedDateTest() {
-        assertEquals("2024-1-2", testWorkout.formattedDate());
+        assertEquals("2024-01-02", testWorkout.formattedDate());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class WorkoutTest {
 
     @Test
     public void workoutDetailsTest() {
-        assertEquals("2024-1-2 full body workout at ARC", testWorkout.workoutDetails());
+        assertEquals("2024-01-02 full body workout at ARC", testWorkout.workoutDetails());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class WorkoutTest {
     public void workoutDetailsAndExercisesTest() {
         testWorkout.addExercise(testExercise1);
         testWorkout.addExercise(testExercise2);
-        assertEquals("2024-1-2 full body workout at ARC\nExercises: exercise1, exercise2",
+        assertEquals("2024-01-02 full body workout at ARC\nExercises: exercise1, exercise2",
                 testWorkout.workoutDetailsAndExercises());
     }
 
@@ -103,10 +103,10 @@ public class WorkoutTest {
     public void workoutDetailsAndExercisesWithRemovalTest() {
         testWorkout.addExercise(testExercise1);
         testWorkout.addExercise(testExercise2);
-        assertEquals("2024-1-2 full body workout at ARC\nExercises: exercise1, exercise2",
+        assertEquals("2024-01-02 full body workout at ARC\nExercises: exercise1, exercise2",
                 testWorkout.workoutDetailsAndExercises());
         testWorkout.removeExercise(testExercise1);
-        assertEquals("2024-1-2 full body workout at ARC\nExercises: exercise2",
+        assertEquals("2024-01-02 full body workout at ARC\nExercises: exercise2",
                 testWorkout.workoutDetailsAndExercises());
     }
 

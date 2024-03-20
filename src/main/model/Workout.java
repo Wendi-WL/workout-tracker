@@ -1,13 +1,15 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 // Represents a workout with details of its date, type, location, and a list of the exercises in the workout
 public class Workout {
 
-    private List<Integer> date;
+    private LocalDate date;
     private String workoutType;
     private String location;
     private final ExerciseList exercises;
@@ -15,17 +17,14 @@ public class Workout {
     // REQUIRES: year > 0, 1 <= month <= 12, 1 <= day <= 31, workoutType, location are non-empty with no spaces
     // EFFECTS: constructs a new instance of Workout, initialized with parameters and an empty list of exercises
     public Workout(int year, int month, int day, String workoutType, String location) {
-        date = new ArrayList<>();
-        date.add(year);
-        date.add(month);
-        date.add(day);
+        date = LocalDate.of(year, month, day);
         this.workoutType = workoutType;
         this.location = location;
         exercises = new ExerciseList();
     }
 
     //getters
-    public List<Integer> getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -44,11 +43,7 @@ public class Workout {
     //setters
     // MODIFIES: this
     public void setDate(int year, int month, int day) {
-        List<Integer> newDate = new ArrayList<>();
-        newDate.add(year);
-        newDate.add(month);
-        newDate.add(day);
-        date = newDate;
+        date = LocalDate.of(year, month, day);
     }
 
     // MODIFIES: this
@@ -76,7 +71,7 @@ public class Workout {
 
     // EFFECTS: returns a String of a formatted date
     public String formattedDate() {
-        return getDate().get(0) + "-" + getDate().get(1) + "-" + getDate().get(2);
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     // EFFECTS: returns a String of the workout details, not including its exercises
@@ -97,10 +92,19 @@ public class Workout {
     // EFFECTS: returns workout as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("date", date);
+        json.put("date", dateToJson());
         json.put("workout type", workoutType);
         json.put("location", location);
         json.put("exercises", exercises.exercisesToJson());
         return json;
+    }
+
+    // EFFECTS: returns date as JSONArray
+    private JSONArray dateToJson() {
+        JSONArray dateArray = new JSONArray();
+        dateArray.put(date.getYear());
+        dateArray.put(date.getMonthValue());
+        dateArray.put(date.getDayOfMonth());
+        return dateArray;
     }
 }

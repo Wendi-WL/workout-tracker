@@ -55,13 +55,10 @@ public class WorkoutHistory {
         for (Workout w : remainingWorkouts) {
             int position = 0;
             for (Workout sw : sortedWorkouts) {
-                for (int i = 0; i <= 2; i++) {
-                    if (w.getDate().get(i) > sw.getDate().get(i)) {
-                        break;
-                    } else if (w.getDate().get(i) < sw.getDate().get(i)) {
-                        position++;
-                        break;
-                    }
+                if (w.getDate().isAfter(sw.getDate())) {
+                    break;
+                } else {
+                    position++;
                 }
             }
             sortedWorkouts.add(position, w);

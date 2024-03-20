@@ -18,9 +18,9 @@ public class DataCheckerTest {
 
     protected void checkWorkout(int year, int month, int day, String workoutType, String location,
                                 Workout w) {
-        assertEquals(year, w.getDate().get(0));
-        assertEquals(month, w.getDate().get(1));
-        assertEquals(day, w.getDate().get(2));
+        assertEquals(year, w.getDate().getYear());
+        assertEquals(month, w.getDate().getMonthValue());
+        assertEquals(day, w.getDate().getDayOfMonth());
         assertEquals(workoutType, w.getWorkoutType());
         assertEquals(location, w.getLocation());
     }

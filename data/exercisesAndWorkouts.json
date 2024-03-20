@@ -1,4 +1,44 @@
 {
-  "exercises": [],
-  "workouts": []
+    "exercises": [
+        {
+            "rest time": 2,
+            "note": "hi!",
+            "reps": 2,
+            "sets": 2,
+            "exercise type": "hi",
+            "name": "e1",
+            "weight": 2
+        },
+        {
+            "rest time": 60,
+            "note": "",
+            "reps": 1,
+            "sets": 3,
+            "exercise type": "full",
+            "name": "e2",
+            "weight": 12
+        }
+    ],
+    "workouts": [
+        {
+            "date": [
+                2023,
+                12,
+                2
+            ],
+            "exercises": [],
+            "location": "2",
+            "workout type": "legs"
+        },
+        {
+            "date": [
+                2024,
+                1,
+                1
+            ],
+            "exercises": [],
+            "location": "arc",
+            "workout type": "hi"
+        }
+    ]
 }
