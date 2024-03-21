@@ -15,8 +15,8 @@ public class TrackerGUI extends JFrame {
     private ExerciseList exerciseList;
     private WorkoutHistory workoutHistory;
 
-    //MODIFIES: this
-    //EFFECTS: creates TrackerGUI, loads welcome screen, displays ???
+    // MODIFIES: this
+    // EFFECTS: creates TrackerGUI, with a navigation bar showing exercises menu tab and workouts menu tab
     public TrackerGUI() {
         super("Workout Tracker");
         setSize(WIDTH, HEIGHT);
@@ -46,8 +46,16 @@ public class TrackerGUI extends JFrame {
         navBar.setTitleAt(WORKOUTS_MENU_INDEX, "Workouts");
     }
 
-    //EFFECTS: returns navigation bar of this UI
+    //getters
     public JTabbedPane getNavBar() {
         return navBar;
+    }
+
+    public ExerciseList getExerciseList() {
+        return exerciseList;
+    }
+
+    public WorkoutHistory getWorkoutHistory() {
+        return workoutHistory;
     }
 }

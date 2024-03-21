@@ -1,25 +1,33 @@
 package ui.menus;
 
+import model.*;
 import ui.TrackerGUI;
 
 import javax.swing.*;
+import javax.swing.text.*;
 
 public class ExercisesMenu extends Menu {
-    //EFFECTS: constructs a home tab for console with buttons and a greeting
+    // EFFECTS: constructs an exercises menu tab for console with create button
     public ExercisesMenu(TrackerGUI tracker) {
         super(tracker);
 
         super.placeCreateButton();
     }
 
+    // EFFECTS: places fields of appropriate format in exercise creation menu dialog
     @Override
     protected Object[] placeFields() {
         JTextField nameField = new JTextField();
         JTextField exerciseTypeField = new JTextField();
-        JFormattedTextField weightField = new JFormattedTextField(0.0);
-        JFormattedTextField setsField = new JFormattedTextField(0);
-        JFormattedTextField repsField = new JFormattedTextField(0);
-        JFormattedTextField restTimeField = new JFormattedTextField(0);
+
+        NumberFormatter doubleFormatter = setNumberFormatter("double", 0.0);
+        NumberFormatter intFormatter = setNumberFormatter("int", 0);
+        NumberFormatter intOneFormatter = setNumberFormatter("int", 1);
+
+        JFormattedTextField weightField = new JFormattedTextField(doubleFormatter);
+        JFormattedTextField setsField = new JFormattedTextField(intOneFormatter);
+        JFormattedTextField repsField = new JFormattedTextField(intOneFormatter);
+        JFormattedTextField restTimeField = new JFormattedTextField(intFormatter);
 
         return new Object[] {
                 "Name (e.g., Shoulder press):", nameField,
@@ -31,6 +39,7 @@ public class ExercisesMenu extends Menu {
         };
     }
 
+    // EFFECTS: parses field entries and creates an exercise based on inputs
     @Override
     protected void handleFieldInputs(Object[] o) {
         JTextField nameField = getJTextField(o, 1);
@@ -46,5 +55,8 @@ public class ExercisesMenu extends Menu {
         int sets = Integer.parseInt(setsField.getText());
         int reps = Integer.parseInt(repsField.getText());
         int restTime = Integer.parseInt(restTimeField.getText());
+
+        Exercise exercise = new Exercise(name, exerciseType, weight, sets, reps, restTime);
+        getTracker().getExerciseList().create(exercise);
     }
 }
