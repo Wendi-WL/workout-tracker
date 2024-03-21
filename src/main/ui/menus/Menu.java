@@ -38,13 +38,12 @@ public abstract class Menu extends JPanel {
 
     // EFFECTS: opens creation menu dialog with appropriate fields and create/cancel options
     protected void createExerciseOrWorkoutDialog() {
-        JFrame dialog = new JFrame();
         Object[] fields = placeFields();
         Object[] options = {
                 "Create!",
                 "Cancel"
         };
-        int createOrCancel = JOptionPane.showOptionDialog(dialog, fields, "Creation Menu",
+        int createOrCancel = JOptionPane.showOptionDialog(null, fields, "Creation Menu",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, fields);
         if (createOrCancel == JOptionPane.OK_OPTION) {
             handleFieldInputs(fields);

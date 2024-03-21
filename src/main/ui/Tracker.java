@@ -588,11 +588,11 @@ public class Tracker {
                     try {
                         exerciseList = reader.readExerciseList();
                         workoutHistory = reader.readWorkoutHistory();
+                        System.out.println("Data loaded from save file.");
+                        printMainMenu();
                     } catch (IOException e) {
                         System.out.println("File does not exist.");
                     }
-                    System.out.println("Data loaded from save file.");
-                    printMainMenu();
                     break;
                 case NO_COMMAND:
                     System.out.println("Data not loaded.");
@@ -776,10 +776,10 @@ public class Tracker {
                         writer.open();
                         writer.write(exerciseList, workoutHistory);
                         writer.close();
+                        System.out.println("Data saved to file.");
                     } catch (IOException e) {
                         System.out.println("Cannot save to file with invalid name.");
                     }
-                    System.out.println("Data saved to file.");
                     endProgram();
                     break;
                 case NO_COMMAND:
