@@ -4,6 +4,7 @@ import model.*;
 import ui.TrackerGUI;
 
 import javax.swing.*;
+import javax.swing.table.*;
 import javax.swing.text.*;
 
 public class ExercisesMenu extends Menu {
@@ -11,7 +12,36 @@ public class ExercisesMenu extends Menu {
     public ExercisesMenu(TrackerGUI tracker) {
         super(tracker);
 
-        super.placeCreateButton();
+        placeCreateButton();
+        displayTable();
+    }
+
+    // EFFECTS: returns JTable with exercise fields as column names, sets column sizes
+    @Override
+    protected JTable createJTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        for (ExerciseFields field : ExerciseFields.values()) {
+            model.addColumn(field.getString());
+        }
+        for (Exercise e : getTracker().getExerciseList().getExerciseList()) {
+            Object[] exerciseObject = {e.getName(), e.getExerciseType(), e.getWeight(), e.getSets(), e.getReps(),
+                    e.getRestTime(), e.getNote()};
+            model.addRow(exerciseObject);
+        }
+
+        JTable table = new JTable(model);
+
+        TableColumn column;
+        for (int i = 0; i < 7; i++) {
+            column = table.getColumnModel().getColumn(i);
+            if (i == 3 || i == 4) {
+                column.setPreferredWidth(50);
+            } else {
+                column.setPreferredWidth(100);
+            }
+        }
+
+        return table;
     }
 
     // EFFECTS: places fields of appropriate format in exercise creation menu dialog

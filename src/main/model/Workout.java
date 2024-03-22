@@ -79,14 +79,20 @@ public class Workout {
         return formattedDate() + " " + getWorkoutType() + " workout at " + getLocation();
     }
 
-    // EFFECTS: returns the details of and the list of exercises in the workout
-    public String workoutDetailsAndExercises() {
+    public String workoutExercises() {
+        if (exercises.getExerciseList().isEmpty()) {
+            return "";
+        }
         StringBuilder exerciseNames = new StringBuilder();
         for (String s : exercises.listExerciseNames()) {
             exerciseNames.append(s).append(", ");
         }
-        exerciseNames = new StringBuilder(exerciseNames.substring(0, exerciseNames.length() - 2));
-        return workoutDetails() + "\n" + "Exercises: " + exerciseNames;
+        return exerciseNames.substring(0, exerciseNames.length() - 2);
+    }
+
+    // EFFECTS: returns the details of and the list of exercises in the workout
+    public String workoutDetailsAndExercises() {
+        return workoutDetails() + "\n" + "Exercises: " + workoutExercises();
     }
 
     // EFFECTS: returns workout as a JSON object

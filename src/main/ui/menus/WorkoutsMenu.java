@@ -4,6 +4,7 @@ import model.*;
 import ui.TrackerGUI;
 
 import javax.swing.*;
+import javax.swing.table.*;
 import java.text.SimpleDateFormat;
 
 public class WorkoutsMenu extends Menu {
@@ -12,6 +13,23 @@ public class WorkoutsMenu extends Menu {
         super(tracker);
 
         placeCreateButton();
+        displayTable();
+    }
+
+    // EFFECTS: returns JTable with workout fields as column names
+    @Override
+    protected JTable createJTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        for (WorkoutFields field : WorkoutFields.values()) {
+            model.addColumn(field.getString());
+        }
+        for (Workout w : getTracker().getWorkoutHistory().getWorkouts()) {
+            Object[] workoutObject = {w.getDate(), w.getWorkoutType(), w.getLocation(),
+                        w.workoutExercises()};
+            model.addRow(workoutObject);
+        }
+
+        return new JTable(model);
     }
 
     // EFFECTS: places fields of appropriate format in workout creation menu dialog

@@ -4,7 +4,6 @@ import ui.TrackerGUI;
 
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
-import java.awt.*;
 import java.text.NumberFormat;
 
 public abstract class Menu extends JPanel {
@@ -14,27 +13,42 @@ public abstract class Menu extends JPanel {
     // EFFECTS: constructs Menu and initializes tracker field
     public Menu(TrackerGUI tracker) {
         this.tracker = tracker;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    }
+
+    //getter
+    public TrackerGUI getTracker() {
+        return tracker;
     }
 
     // EFFECTS: places create button that opens creation menu dialog on click
     protected void placeCreateButton() {
-        JButton b1 = new JButton("+  Create");
-        JPanel buttonRow = formatButtonRow(b1);
-        buttonRow.setSize(WIDTH, HEIGHT / 10);
+        JButton createButton = new JButton("+  Create");
+        JPanel buttonRow = new JPanel();
+        buttonRow.add(createButton);
+        buttonRow.setSize(TrackerGUI.WIDTH, TrackerGUI.HEIGHT);
 
-        b1.addActionListener(evt -> createExerciseOrWorkoutDialog());
+        createButton.addActionListener(evt -> createExerciseOrWorkoutDialog());
 
         this.add(buttonRow);
     }
 
-    // EFFECTS: creates and returns row with button included
-    private JPanel formatButtonRow(JButton b) {
-        JPanel p = new JPanel();
-        p.setLayout(new FlowLayout());
-        p.add(b);
+    // EFFECTS: displays table of exercises with columns being names of fields
+    protected void displayTable() {
+        JTable table = createJTable();
 
-        return p;
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
+
+        JPanel panel = new JPanel();
+        panel.setSize(1000, 1000);
+        panel.add(scrollPane);
+
+        this.add(panel);
     }
+
+    // EFFECTS: returns JTable with appropriate TableModel
+    protected abstract JTable createJTable();
 
     // EFFECTS: opens creation menu dialog with appropriate fields and create/cancel options
     protected void createExerciseOrWorkoutDialog() {
@@ -76,9 +90,4 @@ public abstract class Menu extends JPanel {
 
     // EFFECTS: parses field entries and creates appropriate object based on inputs
     protected abstract void handleFieldInputs(Object[] o);
-
-    //getter
-    public TrackerGUI getTracker() {
-        return tracker;
-    }
 }

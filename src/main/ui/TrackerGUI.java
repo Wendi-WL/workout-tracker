@@ -1,8 +1,7 @@
 package ui;
 
 import model.*;
-import persistence.DataReader;
-import persistence.DataWriter;
+import persistence.*;
 import ui.menus.*;
 
 import javax.swing.*;
@@ -30,6 +29,8 @@ public class TrackerGUI extends JFrame {
         exerciseList = new ExerciseList();
         workoutHistory = new WorkoutHistory();
 
+        popUpLoadDialog();
+
         navBar = new JTabbedPane();
         navBar.setTabPlacement(JTabbedPane.TOP);
 
@@ -38,7 +39,6 @@ public class TrackerGUI extends JFrame {
 
         setVisible(true);
 
-        popUpLoadDialog();
     }
 
     // EFFECTS: creates pop-up dialog with option to load data from previous save file
@@ -47,8 +47,8 @@ public class TrackerGUI extends JFrame {
                 "Yes",
                 "No"
         };
-        int loadOrNot = JOptionPane.showOptionDialog(null, "Would you like to load data from previous save file?", "Load Option",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        int loadOrNot = JOptionPane.showOptionDialog(null, "Would you like to load data from previous save file?",
+                "Load Option", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (loadOrNot == JOptionPane.OK_OPTION) {
             loadData();
         }
