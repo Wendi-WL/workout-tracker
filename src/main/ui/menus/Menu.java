@@ -8,35 +8,83 @@ import java.text.NumberFormat;
 
 public abstract class Menu extends JPanel {
     private final TrackerGUI tracker;
+    private JTable table;
 
     // REQUIRES: TrackerGUI that holds this menu tab
     // EFFECTS: constructs Menu and initializes tracker field
     public Menu(TrackerGUI tracker) {
         this.tracker = tracker;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        table = createJTable();
     }
 
-    //getter
+    //getters
     public TrackerGUI getTracker() {
         return tracker;
     }
 
-    // EFFECTS: places create button that opens creation menu dialog on click
-    protected void placeCreateButton() {
-        JButton createButton = new JButton("+  Create");
-        JPanel buttonRow = new JPanel();
-        buttonRow.add(createButton);
-        buttonRow.setSize(TrackerGUI.WIDTH, TrackerGUI.HEIGHT);
+    public JTable getTable() {
+        return table;
+    }
+
+    // EFFECTS: returns panel of first row of buttons that open dialogs corresponding to their actions
+    protected JPanel actionButtons() {
+        JButton createButton = getCreateButton();
+        JButton editButton = getEditButton();
+        JButton deleteButton = getDeleteButton();
+        JPanel buttonRow = formatButtonRow(createButton, editButton, deleteButton);
 
         createButton.addActionListener(evt -> createExerciseOrWorkoutDialog());
+        table.getSelectionModel().addListSelectionListener(evt -> {
+            if (!evt.getValueIsAdjusting() && table.getSelectedRow() > -1) {
+                editButton.setEnabled(true);
+                deleteButton.setEnabled(true);
+                int rowIndex = table.getSelectedRow();
+                editButton.addActionListener(e -> editExerciseOrWorkoutDialog(rowIndex));
+            }
+        });
 
-        this.add(buttonRow);
+        return buttonRow;
+    }
+
+    // EFFECTS: returns row of buttons
+    protected static JPanel formatButtonRow(JButton createButton, JButton editButton, JButton deleteButton) {
+        JPanel buttonRow = new JPanel();
+        buttonRow.add(createButton);
+        buttonRow.add(editButton);
+        buttonRow.add(deleteButton);
+        buttonRow.setSize(TrackerGUI.WIDTH, TrackerGUI.HEIGHT);
+        return buttonRow;
+    }
+
+    // EFFECTS: returns create button with icon
+    private static JButton getCreateButton() {
+        Icon createIcon = new ImageIcon("./data/createIcon.png");
+        JButton createButton = new JButton(createIcon);
+        createButton.setText("Create");
+        return createButton;
+    }
+
+    // EFFECTS: returns edit button with icon
+    private static JButton getEditButton() {
+        Icon editIcon = new ImageIcon("./data/editIcon.png");
+        JButton editButton = new JButton(editIcon);
+        editButton.setText("Edit");
+        editButton.setEnabled(false);
+        return editButton;
+    }
+
+    // EFFECTS: returns delete button with icon
+    private static JButton getDeleteButton() {
+        Icon deleteIcon = new ImageIcon("./data/trashIcon.png");
+        JButton deleteButton = new JButton(deleteIcon);
+        deleteButton.setText("Delete");
+        deleteButton.setEnabled(false);
+        return deleteButton;
     }
 
     // EFFECTS: displays table of exercises with columns being names of fields
     protected void displayTable() {
-        JTable table = createJTable();
-
         JScrollPane scrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
 
@@ -47,7 +95,7 @@ public abstract class Menu extends JPanel {
         this.add(panel);
     }
 
-    // EFFECTS: returns JTable with appropriate TableModel
+    // EFFECTS: returns JTable with appropriate DefaultTableModel
     protected abstract JTable createJTable();
 
     // EFFECTS: opens creation menu dialog with appropriate fields and create/cancel options
@@ -64,8 +112,30 @@ public abstract class Menu extends JPanel {
         }
     }
 
+    // EFFECTS: opens edit menu dialog with appropriate fields containing current values, and save/cancel options
+    protected void editExerciseOrWorkoutDialog(int selectedRowIndex) {
+        Object[] selectedRow = getRow(selectedRowIndex);
+        Object[] fields = placeEditableFields(selectedRow);
+        Object[] options = {
+                "Save Edits",
+                "Cancel"
+        };
+
+        int editOrCancel = JOptionPane.showOptionDialog(null, fields, "Edit Menu",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, fields);
+        if (editOrCancel == JOptionPane.OK_OPTION) {
+            handleEditedFieldInputs(selectedRow, fields, selectedRowIndex);
+        }
+    }
+
     // EFFECTS: places fields of appropriate format in creation menu dialog
     protected abstract Object[] placeFields();
+
+    // EFFECTS: places fields with current values in edit menu dialog
+    protected abstract Object[] placeEditableFields(Object[] selectedRow);
+
+    // EFFECTS: returns values in each column of row as Object[]
+    protected abstract Object[] getRow(int selectedRowIndex);
 
     // EFFECTS: returns a NumberFormatter of the specified numerical type and minimum
     protected NumberFormatter setNumberFormatter(String type, Number min) {
@@ -88,6 +158,16 @@ public abstract class Menu extends JPanel {
         return (JTextField) o[index];
     }
 
-    // EFFECTS: parses field entries and creates appropriate object based on inputs
+    // EFFECTS: parses field entries, adds to tracker's list and adds row to table, based on inputs
     protected abstract void handleFieldInputs(Object[] o);
+
+    // EFFECTS: parses field entries, updates tracker's list and updates row in table, based on edits
+    protected abstract void handleEditedFieldInputs(Object[] old, Object[] edited, int rowIndex);
+
+    // EFFECTS: updates values in each column of row given a rowObject
+    protected void updateRow(Object[] rowObject, int rowIndex, int numberOfColumns) {
+        for (int i = 0; i < numberOfColumns; i++) {
+            getTable().setValueAt(rowObject[i], rowIndex, i);
+        }
+    }
 }

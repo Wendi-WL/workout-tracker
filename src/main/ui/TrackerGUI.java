@@ -85,11 +85,11 @@ public class TrackerGUI extends JFrame {
         return navBar;
     }
 
-    public ExerciseList getExerciseList() {
+    public ExerciseList getTrackerExerciseList() {
         return exerciseList;
     }
 
-    public WorkoutHistory getWorkoutHistory() {
+    public WorkoutHistory getTrackerWorkoutHistory() {
         return workoutHistory;
     }
 }
