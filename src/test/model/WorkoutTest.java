@@ -14,8 +14,8 @@ public class WorkoutTest {
     @BeforeEach
     public void runBefore() {
         testWorkout = new Workout(2024, 1, 2, "full body", "ARC");
-        testExercise1 = new Exercise("exercise1", "legs", 27.5, 3, 12, 90);
-        testExercise2 = new Exercise("exercise2", "full body", 55, 4, 8, 120);
+        testExercise1 = new Exercise("exercise1", "legs", 27.5, 3, 12, 90, "");
+        testExercise2 = new Exercise("exercise2", "full body", 55, 4, 8, 120, "");
     }
 
     @Test

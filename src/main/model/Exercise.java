@@ -2,6 +2,8 @@ package model;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 // Represents an exercise with details of its name, type, weight, sets, reps, rest time, and additional notes
 public class Exercise {
 
@@ -14,15 +16,15 @@ public class Exercise {
     private String note;
 
     // REQUIRES: weight >= 0, sets > 0, reps > 0, restTime > 0
-    // EFFECTS: constructs a new instance of Exercise, initialized with parameters and empty note
-    public Exercise(String name, String exerciseType, double weight, int sets, int reps, int restTime) {
+    // EFFECTS: constructs a new instance of Exercise, initialized with parameters
+    public Exercise(String name, String exerciseType, double weight, int sets, int reps, int restTime, String note) {
         this.name = name;
         this.exerciseType = exerciseType;
         this.weight = weight;
         this.sets = sets;
         this.reps = reps;
         this.restTime = restTime;
-        this.note = "";
+        this.note = note;
     }
 
     //getters
@@ -55,37 +57,30 @@ public class Exercise {
     }
 
     //setters
-    // MODIFIES: this
     public void setName(String name) {
         this.name = name;
     }
 
-    // MODIFIES: this
     public void setExerciseType(String exerciseType) {
         this.exerciseType = exerciseType;
     }
 
-    // MODIFIES: this
     public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    // MODIFIES: this
     public void setSets(int sets) {
         this.sets = sets;
     }
 
-    // MODIFIES: this
     public void setReps(int reps) {
         this.reps = reps;
     }
 
-    // MODIFIES: this
     public void setRestTime(int restTime) {
         this.restTime = restTime;
     }
 
-    // MODIFIES: this
     public void setNote(String note) {
         this.note = note;
     }
@@ -111,4 +106,24 @@ public class Exercise {
         return json;
     }
 
+    // EFFECTS: returns true if all fields of Exercise are equivalent between two Exercise objects
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Exercise exercise = (Exercise) o;
+        return Double.compare(weight, exercise.weight) == 0 && sets == exercise.sets && reps == exercise.reps
+                && restTime == exercise.restTime && Objects.equals(name, exercise.name)
+                && Objects.equals(exerciseType, exercise.exerciseType) && Objects.equals(note, exercise.note);
+    }
+
+    // EFFECTS: overridden hashCode based on overridden equals
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, exerciseType, weight, sets, reps, restTime, note);
+    }
 }

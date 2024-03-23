@@ -110,12 +110,9 @@ public class DataReader {
         int sets = jsonObject.getInt("sets");
         int reps = jsonObject.getInt("reps");
         int restTime = jsonObject.getInt("rest time");
-        Exercise e = new Exercise(name, exerciseType, weight, sets, reps, restTime);
-
         String note = jsonObject.getString("note");
-        e.setNote(note);
 
-        return e;
+        return new Exercise(name, exerciseType, weight, sets, reps, restTime, note);
     }
 
     // MODIFIES: wh

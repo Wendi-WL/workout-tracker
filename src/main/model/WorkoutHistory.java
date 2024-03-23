@@ -20,9 +20,11 @@ public class WorkoutHistory {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds the workout to the workout history
+    // EFFECTS: adds the workout to the workout history, if there is no existing workout with same date, type, location
     public void addWorkout(Workout w) {
-        workouts.add(w);
+        if (!workouts.contains(w)) {
+            workouts.add(w);
+        }
     }
 
     // REQUIRES: w is in workouts

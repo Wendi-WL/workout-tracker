@@ -175,7 +175,7 @@ public class Tracker {
         int restTime = input.nextInt();
         input.nextLine();
 
-        Exercise exercise = new Exercise(name, exerciseType, weight, sets, reps, restTime);
+        Exercise exercise = new Exercise(name, exerciseType, weight, sets, reps, restTime, "");
         exerciseList.create(exercise);
         return exercise;
     }

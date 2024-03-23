@@ -52,10 +52,8 @@ public class DataWriterTest extends DataCheckerTest {
     @Test
     void writeGeneralFileTest() {
         try {
-            Exercise e1 = new Exercise("e1", "legs", 27.5, 3, 12, 60);
-            e1.setNote("sample note");
-            Exercise e2 = new Exercise("e2", "arms", 12.5, 5, 8, 30);
-            e2.setNote("another sample note");
+            Exercise e1 = new Exercise("e1", "legs", 27.5, 3, 12, 60, "sample note");
+            Exercise e2 = new Exercise("e2", "arms", 12.5, 5, 8, 30, "another sample note");
             el.create(e1);
             el.create(e2);
 

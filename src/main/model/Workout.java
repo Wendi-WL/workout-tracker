@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 // Represents a workout with details of its date, type, location, and a list of the exercises in the workout
 public class Workout {
@@ -41,17 +42,14 @@ public class Workout {
     }
 
     //setters
-    // MODIFIES: this
     public void setDate(int year, int month, int day) {
         date = LocalDate.of(year, month, day);
     }
 
-    // MODIFIES: this
     public void setWorkoutType(String workoutType) {
         this.workoutType = workoutType;
     }
 
-    // MODIFIES: this
     public void setLocation(String location) {
         this.location = location;
     }
@@ -112,5 +110,25 @@ public class Workout {
         dateArray.put(date.getMonthValue());
         dateArray.put(date.getDayOfMonth());
         return dateArray;
+    }
+
+    // EFFECTS: returns true if date, workout type, and location fields are equivalent between two Workout objects
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Workout workout = (Workout) o;
+        return Objects.equals(date, workout.date) && Objects.equals(workoutType, workout.workoutType)
+                && Objects.equals(location, workout.location) && Objects.equals(exercises, workout.exercises);
+    }
+
+    // EFFECTS: overridden hashCode based on overridden equals
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, workoutType, location, exercises);
     }
 }

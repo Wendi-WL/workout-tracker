@@ -14,8 +14,8 @@ public class ExerciseListTest {
     @BeforeEach
     public void runBefore() {
         testExerciseList = new ExerciseList();
-        testExercise1 = new Exercise("exercise1", "legs", 27.5, 3, 12, 90);
-        testExercise2 = new Exercise("exercise2", "full body", 55, 4, 8, 120);
+        testExercise1 = new Exercise("exercise1", "legs", 27.5, 3, 12, 90, "");
+        testExercise2 = new Exercise("exercise2", "full body", 55, 4, 8, 120, "note");
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ExerciseListTest {
         assertEquals("exercise2 is a(n) full body exercise.\n" +
                         "Weight: 55.0lbs\n" +
                         "Sets: 4, Reps: 8, Rest time: 120 seconds\n" +
-                        "Notes: ",
+                        "Notes: note",
                 testExerciseList.exerciseDetails(testExercise2));
     }
 
@@ -84,7 +84,7 @@ public class ExerciseListTest {
         assertEquals("exercise2 is a(n) full body exercise.\n" +
                         "Weight: 55.0lbs\n" +
                         "Sets: 4, Reps: 8, Rest time: 120 seconds\n" +
-                        "Notes: ",
+                        "Notes: note",
                 testExerciseList.exerciseDetails(testExercise2));
         testExercise2.setNote("new note");
         assertEquals("exercise2 is a(n) full body exercise.\n" +
