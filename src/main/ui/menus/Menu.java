@@ -3,7 +3,9 @@ package ui.menus;
 import ui.TrackerGUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
 public abstract class Menu extends JPanel {
@@ -37,13 +39,19 @@ public abstract class Menu extends JPanel {
         createButton.addActionListener(evt -> createExerciseOrWorkoutDialog());
         table.getSelectionModel().addListSelectionListener(evt -> {
             if (!evt.getValueIsAdjusting() && table.getSelectedRow() > -1) {
+                for (ActionListener al : editButton.getActionListeners()) {
+                    editButton.removeActionListener(al);
+                }
+                for (ActionListener al : deleteButton.getActionListeners()) {
+                    deleteButton.removeActionListener(al);
+                }
                 editButton.setEnabled(true);
                 deleteButton.setEnabled(true);
                 int rowIndex = table.getSelectedRow();
                 editButton.addActionListener(e -> editExerciseOrWorkoutDialog(rowIndex));
+                deleteButton.addActionListener(e -> deleteExerciseOrWorkoutDialog(rowIndex));
             }
         });
-
         return buttonRow;
     }
 
@@ -128,6 +136,17 @@ public abstract class Menu extends JPanel {
         }
     }
 
+    // EFFECTS: opens deletion dialog with option to delete exercise or workout from row of table and tracker's list
+    protected void deleteExerciseOrWorkoutDialog(int selectedRowIndex) {
+        Object[] selectedRow = getRow(selectedRowIndex);
+        int deleteOrNot = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Deletion Menu",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (deleteOrNot == JOptionPane.YES_OPTION) {
+            ((DefaultTableModel) table.getModel()).removeRow(selectedRowIndex);
+            deleteExerciseOrWorkout(selectedRow);
+        }
+    }
+
     // EFFECTS: places fields of appropriate format in creation menu dialog
     protected abstract Object[] placeFields();
 
@@ -170,4 +189,8 @@ public abstract class Menu extends JPanel {
             getTable().setValueAt(rowObject[i], rowIndex, i);
         }
     }
+
+    // MODIFIES: this
+    // EFFECTS: deletes exercise or workout from tracker's list
+    protected abstract void deleteExerciseOrWorkout(Object[] o);
 }

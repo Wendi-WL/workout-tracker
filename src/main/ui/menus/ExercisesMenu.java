@@ -191,4 +191,19 @@ public class ExercisesMenu extends Menu {
             }
         }
     }
+
+
+    // MODIFIES: this
+    // EFFECTS: converts array object to Exercise, then deletes exercise from tracker's list
+    @Override
+    protected void deleteExerciseOrWorkout(Object[] o) {
+        Exercise e = rowObjectToExercise(o);
+        deleteExercise(e);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: deletes exercise from tracker's list
+    private void deleteExercise(Exercise e) {
+        getTracker().getTrackerExerciseList().delete(e);
+    }
 }
