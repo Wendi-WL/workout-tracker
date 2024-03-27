@@ -5,6 +5,7 @@ import persistence.*;
 import ui.menus.*;
 
 import javax.swing.*;
+import java.awt.event.*;
 import java.io.IOException;
 
 public class TrackerGUI extends JFrame {
@@ -24,7 +25,13 @@ public class TrackerGUI extends JFrame {
     public TrackerGUI() {
         super("Workout Tracker");
         setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                popUpSaveDialog();
+            }
+        });
 
         exerciseList = new ExerciseList();
         workoutHistory = new WorkoutHistory();
@@ -41,15 +48,24 @@ public class TrackerGUI extends JFrame {
 
     }
 
+    //getters
+    public JTabbedPane getNavBar() {
+        return navBar;
+    }
+
+    public ExerciseList getTrackerExerciseList() {
+        return exerciseList;
+    }
+
+    public WorkoutHistory getTrackerWorkoutHistory() {
+        return workoutHistory;
+    }
+
     // EFFECTS: creates pop-up dialog with option to load data from previous save file
     private void popUpLoadDialog() {
-        Object[] options = {
-                "Yes",
-                "No"
-        };
-        int loadOrNot = JOptionPane.showOptionDialog(null, "Would you like to load data from previous save file?",
-                "Load Option", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        if (loadOrNot == JOptionPane.OK_OPTION) {
+        int loadOrNot = JOptionPane.showConfirmDialog(null, "Would you like to load data from previous save file?",
+                "Load Option", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (loadOrNot == JOptionPane.YES_OPTION) {
             loadData();
         }
     }
@@ -80,16 +96,30 @@ public class TrackerGUI extends JFrame {
         navBar.setTitleAt(WORKOUTS_MENU_INDEX, "Workouts");
     }
 
-    //getters
-    public JTabbedPane getNavBar() {
-        return navBar;
+    // EFFECTS: creates pop-up dialog with option to save data to file before exiting, or cancel closing the frame
+    private void popUpSaveDialog() {
+        int saveOrNot = JOptionPane.showConfirmDialog(null, "Would you like to save data to file?",
+                "Load Option", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (saveOrNot == JOptionPane.YES_OPTION) {
+            saveData();
+            System.exit(0);
+        } else if (saveOrNot == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        }
     }
 
-    public ExerciseList getTrackerExerciseList() {
-        return exerciseList;
-    }
-
-    public WorkoutHistory getTrackerWorkoutHistory() {
-        return workoutHistory;
+    // MODIFIES: this
+    // EFFECTS: saves data to file
+    private void saveData() {
+        try {
+            writer.open();
+            writer.write(exerciseList, workoutHistory);
+            writer.close();
+            JOptionPane.showConfirmDialog(null, "Data saved to file.", "File Write Success",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showConfirmDialog(null, "Cannot save to file with invalid name.", "File Write Error",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
