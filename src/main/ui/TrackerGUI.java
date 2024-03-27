@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
 
+// Workout Tracker Application with a Graphical User Interface
 public class TrackerGUI extends JFrame {
     public static final int EXERCISES_MENU_INDEX = 0;
     public static final int WORKOUTS_MENU_INDEX = 1;
@@ -27,6 +28,7 @@ public class TrackerGUI extends JFrame {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
+            // EFFECTS: opens dialog with save options before closing
             @Override
             public void windowClosing(WindowEvent e) {
                 popUpSaveDialog();

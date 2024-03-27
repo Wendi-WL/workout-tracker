@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.text.*;
 
+// Menu with the exercises in the exercise list and buttons for associated actions
 public class ExercisesMenu extends Menu {
     // EFFECTS: constructs an exercises menu tab for console with create button
     public ExercisesMenu(TrackerGUI tracker) {

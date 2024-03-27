@@ -8,30 +8,31 @@ import javax.swing.table.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
+// Menu with workouts in the workout history and buttons for associated actions
 public class WorkoutsMenu extends Menu {
     // EFFECTS: constructs a workouts menu tab for console with create button
     public WorkoutsMenu(TrackerGUI tracker) {
         super(tracker);
         this.add(actionButtons());
-        this.add(exerciseDetailsButton());
+        //this.add(exerciseDetailsButton());
         displayTable();
     }
 
-    // EFFECTS: returns exercise details button in new row
-    protected JPanel exerciseDetailsButton() {
-        JPanel buttonRow = new JPanel();
-        JButton detailsButton = new JButton("View/Add/Remove Exercises");
-        detailsButton.setEnabled(false);
-        buttonRow.add(detailsButton);
-
-        getTable().getSelectionModel().addListSelectionListener(evt -> {
-            if (getTable().getSelectedRow() > -1) {
-                detailsButton.setEnabled(true);
-            }
-        });
-
-        return buttonRow;
-    }
+//    // EFFECTS: returns exercise details button in new row
+//    protected JPanel exerciseDetailsButton() {
+//        JPanel buttonRow = new JPanel();
+//        JButton detailsButton = new JButton("View/Add/Remove Exercises");
+//        detailsButton.setEnabled(false);
+//        buttonRow.add(detailsButton);
+//
+//        getTable().getSelectionModel().addListSelectionListener(evt -> {
+//            if (getTable().getSelectedRow() > -1) {
+//                detailsButton.setEnabled(true);
+//            }
+//        });
+//
+//        return buttonRow;
+//    }
 
     // EFFECTS: returns JTable with workout fields as column names
     @Override

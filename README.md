@@ -31,3 +31,14 @@ As a user, I want to be able to:
 As a user:
 - when I quit the application, I want to be given the **option** to save my exercises and workouts to file 
 - when I start the application, I want to be given the **option** to load my exercises and workouts from file
+
+## Instructions for Grader
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by
+clicking the "Create" button in either the Exercise or Workout Menu, filling the fields as desired,
+and confirming using the "Create!" button in the dialog.
+- You can generate the second required action related to the user story "removing an X from a Y" by
+clicking on an exercise or a workout that is a row in the table shown in either the Exercise or Workout Menu, 
+then clicking the "Delete" button, and confirming using the "Yes" button in the dialog.
+- You can locate my visual component by looking at the icons on the "Create", "Edit", and "Delete" buttons.
+- You can save the state of my application by closing the window and selecting "Yes" in the save option dialog.
+- You can reload the state of my application by launching the application and selecting "Yes" in the load option dialog.

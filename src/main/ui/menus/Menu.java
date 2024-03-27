@@ -8,6 +8,7 @@ import javax.swing.text.NumberFormatter;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
+// Menu in a tab bar
 public abstract class Menu extends JPanel {
     private final TrackerGUI tracker;
     private JTable table;
