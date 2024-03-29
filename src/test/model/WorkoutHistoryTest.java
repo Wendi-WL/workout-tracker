@@ -37,6 +37,14 @@ public class WorkoutHistoryTest {
     }
 
     @Test
+    public void addWorkoutDuplicateTest() {
+        testWorkoutHistory.addWorkout(testWorkout);
+        testWorkoutHistory.addWorkout(testWorkout);
+        assertEquals(1, testWorkoutHistory.getWorkouts().size());
+        assertEquals(testWorkout, testWorkoutHistory.getWorkouts().get(0));
+    }
+
+    @Test
     public void addWorkoutMultipleTest() {
         testWorkoutHistory.addWorkout(testWorkout);
         testWorkoutHistory.addWorkout(differentYearWorkout);
