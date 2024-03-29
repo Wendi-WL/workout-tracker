@@ -15,7 +15,7 @@ public class TrackerGUI extends JFrame {
 
     public static final int WIDTH = 900;
     public static final int HEIGHT = 600;
-    private JTabbedPane navBar;
+    private final JTabbedPane navBar;
     private ExerciseList exerciseList;
     private WorkoutHistory workoutHistory;
     private final DataReader reader = new DataReader("./data/exercisesAndWorkouts.json");
@@ -47,14 +47,9 @@ public class TrackerGUI extends JFrame {
         add(navBar);
 
         setVisible(true);
-
     }
 
     //getters
-    public JTabbedPane getNavBar() {
-        return navBar;
-    }
-
     public ExerciseList getTrackerExerciseList() {
         return exerciseList;
     }
@@ -65,7 +60,8 @@ public class TrackerGUI extends JFrame {
 
     // EFFECTS: creates pop-up dialog with option to load data from previous save file
     private void popUpLoadDialog() {
-        int loadOrNot = JOptionPane.showConfirmDialog(null, "Would you like to load data from previous save file?",
+        int loadOrNot = JOptionPane.showConfirmDialog(null,
+                "Welcome to Workout Tracker! :D\nWould you like to load data from previous save file?",
                 "Load Option", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (loadOrNot == JOptionPane.YES_OPTION) {
             loadData();
@@ -101,7 +97,7 @@ public class TrackerGUI extends JFrame {
     // EFFECTS: creates pop-up dialog with option to save data to file before exiting, or cancel closing the frame
     private void popUpSaveDialog() {
         int saveOrNot = JOptionPane.showConfirmDialog(null, "Would you like to save data to file?",
-                "Load Option", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Save Option", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (saveOrNot == JOptionPane.YES_OPTION) {
             saveData();
             exitDialog();
@@ -126,7 +122,8 @@ public class TrackerGUI extends JFrame {
     }
 
     private void exitDialog() {
-        JOptionPane.showMessageDialog(null, "Exiting... Thank you for using Workout Tracker!");
+        JOptionPane.showMessageDialog(null, "Thank you for using Workout Tracker!\nClick 'OK' to exit :)",
+                "Exit dialog", JOptionPane.PLAIN_MESSAGE);
         System.exit(0);
     }
 }
