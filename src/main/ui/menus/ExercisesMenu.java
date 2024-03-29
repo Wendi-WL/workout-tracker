@@ -9,11 +9,11 @@ import javax.swing.text.*;
 
 // Menu with the exercises in the exercise list and buttons for associated actions
 public class ExercisesMenu extends Menu {
-    // EFFECTS: constructs an exercises menu tab for console with create button
+    // EFFECTS: constructs an exercises menu tab for console with appropriate buttons and exercise list table
     public ExercisesMenu(TrackerGUI tracker) {
         super(tracker);
         this.add(actionButtons());
-        displayTable();
+        this.add(tableScrollPane());
     }
 
     // EFFECTS: returns JTable using appropriate table model and settings, sets column sizes
@@ -37,8 +37,8 @@ public class ExercisesMenu extends Menu {
         return table;
     }
 
-    // EFFECTS: returns table model with appropriate fields as column names and rows of exercises
-    private DefaultTableModel getTableModel() {
+    // EFFECTS: returns table model with exercise fields as column names and rows of exercises
+    protected DefaultTableModel getTableModel() {
         DefaultTableModel model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -175,7 +175,7 @@ public class ExercisesMenu extends Menu {
     }
 
     // EFFECTS: returns Exercise represented by the row Object[]
-    private Exercise rowObjectToExercise(Object[] o) {
+    public Exercise rowObjectToExercise(Object[] o) {
         return new Exercise(o[0].toString(), o[1].toString(), (double) o[2], (int) o[3], (int) o[4], (int) o[5],
                 o[6].toString());
     }
@@ -200,7 +200,7 @@ public class ExercisesMenu extends Menu {
 
 
     // MODIFIES: this
-    // EFFECTS: converts array object to Exercise, then deletes exercise from tracker's list
+    // EFFECTS: converts array object to an Exercise, then deletes exercise from tracker's list
     @Override
     protected void deleteExerciseOrWorkout(Object[] o) {
         Exercise e = rowObjectToExercise(o);

@@ -5,34 +5,268 @@ import ui.TrackerGUI;
 
 import javax.swing.*;
 import javax.swing.table.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 // Menu with workouts in the workout history and buttons for associated actions
 public class WorkoutsMenu extends Menu {
-    // EFFECTS: constructs a workouts menu tab for console with create button
+    private JTable exercisesTable;
+    private JTable exerciseListTable;
+
+    // EFFECTS: constructs a workouts menu tab for console with appropriate buttons and workout history table
     public WorkoutsMenu(TrackerGUI tracker) {
         super(tracker);
         this.add(actionButtons());
-        //this.add(exerciseDetailsButton());
-        displayTable();
+        this.add(exerciseDetailsButton());
+        this.add(tableScrollPane());
     }
 
-//    // EFFECTS: returns exercise details button in new row
-//    protected JPanel exerciseDetailsButton() {
-//        JPanel buttonRow = new JPanel();
-//        JButton detailsButton = new JButton("View/Add/Remove Exercises");
-//        detailsButton.setEnabled(false);
-//        buttonRow.add(detailsButton);
-//
-//        getTable().getSelectionModel().addListSelectionListener(evt -> {
-//            if (getTable().getSelectedRow() > -1) {
-//                detailsButton.setEnabled(true);
-//            }
-//        });
-//
-//        return buttonRow;
-//    }
+    // EFFECTS: returns exercise details button in new row
+    protected JPanel exerciseDetailsButton() {
+        JPanel buttonRow = new JPanel();
+        JButton detailsButton = new JButton("View/Add/Remove Exercises");
+        detailsButton.setEnabled(false);
+        buttonRow.add(detailsButton);
+
+        getTable().getSelectionModel().addListSelectionListener(evt -> {
+            if (!evt.getValueIsAdjusting() && getTable().getSelectedRow() > -1) {
+                for (ActionListener al : detailsButton.getActionListeners()) {
+                    detailsButton.removeActionListener(al);
+                }
+                detailsButton.setEnabled(true);
+                int rowIndex = getTable().getSelectedRow();
+                detailsButton.addActionListener(e -> detailsDialog(rowIndex));
+            }
+        });
+
+        return buttonRow;
+    }
+
+    // EFFECTS: opens new frame with workout details, exercise add/remove buttons, and workout exercises table
+    private void detailsDialog(int selectedRowIndex) {
+        JFrame detailsFrame = new JFrame("Workout Details and Exercises");
+        detailsFrame.setSize(TrackerGUI.WIDTH, TrackerGUI.HEIGHT);
+
+        Object[] selectedRow = getRow(selectedRowIndex);
+        Workout workoutNoExercises = rowObjectToWorkout(selectedRow);
+        Workout workout = null;
+        for (Workout w : getTracker().getTrackerWorkoutHistory().getWorkouts()) {
+            if (w.equals(workoutNoExercises)) {
+                workout = w;
+            }
+        }
+        JPanel panel = new JPanel();
+        if (workout != null) {
+            panel = getDetailsPanel(workout);
+        }
+
+        detailsFrame.add(panel);
+        detailsFrame.setVisible(true);
+    }
+
+    // EFFECTS: returns panel with workout details, exercise buttons and table
+    private JPanel getDetailsPanel(Workout w) {
+        JPanel panel = getWorkoutDetailsPanel(w);
+
+        JPanel buttonRow = new JPanel();
+        JButton addButton = new JButton("+  Add");
+        JButton removeButton = new JButton("X  Remove");
+        removeButton.setEnabled(false);
+        buttonRow.add(addButton);
+        buttonRow.add(removeButton);
+        panel.add(buttonRow);
+
+        exercisesTable = exercisesJTable(w);
+        panel.add(exercisesTableScrollPane(exercisesTable));
+
+        addButton.addActionListener(evt -> addExerciseDialog(w));
+        exercisesTable.getSelectionModel().addListSelectionListener(evt -> {
+            if (!evt.getValueIsAdjusting() && exercisesTable.getSelectedRow() > -1) {
+                for (ActionListener al : removeButton.getActionListeners()) {
+                    removeButton.removeActionListener(al);
+                }
+                removeButton.setEnabled(true);
+                removeButton.addActionListener(e -> removeExerciseDialog(exercisesTable.getSelectedRow(), w));
+            }
+        });
+
+        return panel;
+    }
+
+    // EFFECTS: returns panel with workout details
+    private JPanel getWorkoutDetailsPanel(Workout w) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JLabel title = new JLabel("Workout:");
+        title.setFont(new Font("Serif", Font.BOLD, 24));
+        JLabel workoutDetails = new JLabel(w.workoutDetails());
+        workoutDetails.setFont(new Font("Serif", Font.PLAIN, 20));
+        JLabel heading = new JLabel("Exercises:");
+        heading.setFont(new Font("Serif", Font.BOLD, 22));
+        panel.add(title);
+        panel.add(workoutDetails);
+        panel.add(heading);
+        return panel;
+    }
+
+    // EFFECTS: returns scroll pane with table of exercises with columns being names of fields
+    private JScrollPane exercisesTableScrollPane(JTable table) {
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
+        return scrollPane;
+    }
+
+    // EFFECTS: returns JTable with exercise fields as column names
+    private JTable exercisesJTable(Workout w) {
+        JTable table = new JTable(getExercisesTableModel(w));
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(false);
+
+        TableColumn column;
+        for (int i = 0; i < 7; i++) {
+            column = table.getColumnModel().getColumn(i);
+            if (i == 3 || i == 4) {
+                column.setPreferredWidth(50);
+            } else {
+                column.setPreferredWidth(100);
+            }
+        }
+
+        return table;
+    }
+
+    // EFFECTS: returns table model with exercise fields as column names and rows of exercises
+    private DefaultTableModel getExercisesTableModel(Workout w) {
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        model.addColumn("Name");
+        model.addColumn("Exercise Type");
+        model.addColumn("Weight");
+        model.addColumn("Sets");
+        model.addColumn("Reps");
+        model.addColumn("Rest Time");
+        model.addColumn("Note(s)");
+
+        for (Exercise e : w.getExercises().getExerciseList()) {
+            Object[] exerciseObject = {e.getName(), e.getExerciseType(), e.getWeight(), e.getSets(), e.getReps(),
+                    e.getRestTime(), e.getNote()};
+            model.addRow(exerciseObject);
+        }
+
+        return model;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: opens add exercise dialog with instructions and table of all exercises to select from and add to workout
+    private void addExerciseDialog(Workout w) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new Label("Select an exercise from the list of all exercises to add to the workout"));
+        panel.add(exerciseListJTable());
+        int addOrNot = JOptionPane.showConfirmDialog(null, panel, "Add Menu",
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (addOrNot == JOptionPane.YES_OPTION) {
+            if (exerciseListTable.getSelectedRow() > -1) {
+                Object[] o = getExerciseListRow(exerciseListTable.getSelectedRow());
+                ((DefaultTableModel) exercisesTable.getModel()).addRow(o);
+                Exercise e = new Exercise(o[0].toString(), o[1].toString(), (double) o[2], (int) o[3], (int) o[4],
+                        (int) o[5], o[6].toString());
+                w.addExercise(e);
+            }
+        }
+    }
+
+    // EFFECTS: returns JTable using exercise table model and settings, sets column sizes
+    private JTable exerciseListJTable() {
+        exerciseListTable = new JTable(getExerciseListTableModel());
+        exerciseListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        exerciseListTable.setRowSelectionAllowed(true);
+        exerciseListTable.setColumnSelectionAllowed(false);
+
+        TableColumn column;
+        for (int i = 0; i < 7; i++) {
+            column = exerciseListTable.getColumnModel().getColumn(i);
+            if (i == 3 || i == 4) {
+                column.setPreferredWidth(50);
+            } else {
+                column.setPreferredWidth(100);
+            }
+        }
+
+        return exerciseListTable;
+    }
+
+    // EFFECTS: returns table model with exercise fields as column names and rows of exercises
+    private DefaultTableModel getExerciseListTableModel() {
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        model.addColumn("Name");
+        model.addColumn("Exercise Type");
+        model.addColumn("Weight");
+        model.addColumn("Sets");
+        model.addColumn("Reps");
+        model.addColumn("Rest Time");
+        model.addColumn("Note(s)");
+
+        for (Exercise e : getTracker().getTrackerExerciseList().getExerciseList()) {
+            Object[] exerciseObject = {e.getName(), e.getExerciseType(), e.getWeight(), e.getSets(), e.getReps(),
+                    e.getRestTime(), e.getNote()};
+            model.addRow(exerciseObject);
+        }
+
+        return model;
+    }
+
+    // EFFECTS: returns exercise array object from exercise list table specified by selected index
+    private Object[] getExerciseListRow(int selectedRowIndex) {
+        Object[] row = new Object[7];
+        for (int i = 0; i < 7; i++) {
+            row[i] = exerciseListTable.getValueAt(selectedRowIndex, i);
+        }
+        return row;
+    }
+
+    // EFFECTS: opens remove exercise dialog with option to remove exercise from workout
+    private void removeExerciseDialog(int selectedRowIndex, Workout w) {
+        Object[] selectedRow = getExerciseRow(selectedRowIndex);
+        int removeOrNot = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to remove this exercise from the workout?", "Remove Menu",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (removeOrNot == JOptionPane.YES_OPTION) {
+            ((DefaultTableModel) exercisesTable.getModel()).removeRow(selectedRowIndex);
+            removeExercise(selectedRow, w);
+        }
+    }
+
+    // EFFECTS: returns exercise array object from the workout's exercises table
+    private Object[] getExerciseRow(int selectedRowIndex) {
+        Object[] row = new Object[7];
+        for (int i = 0; i < 7; i++) {
+            row[i] = exercisesTable.getValueAt(selectedRowIndex, i);
+        }
+        return row;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes exercise from workout's exercise list
+    private void removeExercise(Object[] o, Workout w) {
+        Exercise e = new Exercise(o[0].toString(), o[1].toString(), (double) o[2], (int) o[3], (int) o[4], (int) o[5],
+                o[6].toString());
+        w.getExercises().getExerciseList().remove(e);
+    }
 
     // EFFECTS: returns JTable with workout fields as column names
     @Override
@@ -45,8 +279,8 @@ public class WorkoutsMenu extends Menu {
         return table;
     }
 
-    // EFFECTS: returns table model with appropriate fields as column names and rows of workouts
-    private DefaultTableModel getTableModel() {
+    // EFFECTS: returns table model with workout fields as column names and rows of workouts
+    protected DefaultTableModel getTableModel() {
         DefaultTableModel model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -57,11 +291,9 @@ public class WorkoutsMenu extends Menu {
         model.addColumn("Date");
         model.addColumn("Workout Type");
         model.addColumn("Location");
-        model.addColumn("Exercises");
 
         for (Workout w : getTracker().getTrackerWorkoutHistory().getWorkouts()) {
-            Object[] workoutObject = {w.getDate(), w.getWorkoutType(), w.getLocation(),
-                    w.workoutExercises()};
+            Object[] workoutObject = {w.getDate(), w.getWorkoutType(), w.getLocation()};
             model.addRow(workoutObject);
         }
 
@@ -98,8 +330,8 @@ public class WorkoutsMenu extends Menu {
 
     // EFFECTS: returns values in each column of row as Object[]
     protected Object[] getRow(int selectedRowIndex) {
-        Object[] row = new Object[4];
-        for (int i = 0; i < 4; i++) {
+        Object[] row = new Object[3];
+        for (int i = 0; i < 3; i++) {
             row[i] = getTable().getValueAt(selectedRowIndex, i);
         }
         return row;
@@ -171,7 +403,7 @@ public class WorkoutsMenu extends Menu {
     }
 
     // MODIFIES: this
-    // EFFECTS: converts array object to Workout, then deletes workout from tracker's list
+    // EFFECTS: converts array object to a Workout, then deletes workout from tracker's list
     @Override
     protected void deleteExerciseOrWorkout(Object[] o) {
         Workout w = rowObjectToWorkout(o);

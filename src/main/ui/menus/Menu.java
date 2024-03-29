@@ -11,7 +11,7 @@ import java.text.NumberFormat;
 // Menu in a tab bar
 public abstract class Menu extends JPanel {
     private final TrackerGUI tracker;
-    private JTable table;
+    private final JTable table;
 
     // REQUIRES: TrackerGUI that holds this menu tab
     // EFFECTS: constructs Menu and initializes tracker field
@@ -35,7 +35,10 @@ public abstract class Menu extends JPanel {
         JButton createButton = getCreateButton();
         JButton editButton = getEditButton();
         JButton deleteButton = getDeleteButton();
-        JPanel buttonRow = formatButtonRow(createButton, editButton, deleteButton);
+        JPanel buttonRow = new JPanel();
+        buttonRow.add(createButton);
+        buttonRow.add(editButton);
+        buttonRow.add(deleteButton);
 
         createButton.addActionListener(evt -> createExerciseOrWorkoutDialog());
         table.getSelectionModel().addListSelectionListener(evt -> {
@@ -48,21 +51,10 @@ public abstract class Menu extends JPanel {
                 }
                 editButton.setEnabled(true);
                 deleteButton.setEnabled(true);
-                int rowIndex = table.getSelectedRow();
-                editButton.addActionListener(e -> editExerciseOrWorkoutDialog(rowIndex));
-                deleteButton.addActionListener(e -> deleteExerciseOrWorkoutDialog(rowIndex));
+                editButton.addActionListener(e -> editExerciseOrWorkoutDialog(table.getSelectedRow()));
+                deleteButton.addActionListener(e -> deleteExerciseOrWorkoutDialog(table.getSelectedRow()));
             }
         });
-        return buttonRow;
-    }
-
-    // EFFECTS: returns row of buttons
-    protected static JPanel formatButtonRow(JButton createButton, JButton editButton, JButton deleteButton) {
-        JPanel buttonRow = new JPanel();
-        buttonRow.add(createButton);
-        buttonRow.add(editButton);
-        buttonRow.add(deleteButton);
-        buttonRow.setSize(TrackerGUI.WIDTH, TrackerGUI.HEIGHT);
         return buttonRow;
     }
 
@@ -92,16 +84,11 @@ public abstract class Menu extends JPanel {
         return deleteButton;
     }
 
-    // EFFECTS: displays table of exercises with columns being names of fields
-    protected void displayTable() {
+    // EFFECTS: returns scroll pane with table of exercises with columns being names of fields
+    protected JScrollPane tableScrollPane() {
         JScrollPane scrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
-
-        JPanel panel = new JPanel();
-        panel.setSize(1000, 1000);
-        panel.add(scrollPane);
-
-        this.add(panel);
+        return scrollPane;
     }
 
     // EFFECTS: returns JTable with appropriate DefaultTableModel
@@ -187,7 +174,7 @@ public abstract class Menu extends JPanel {
     // EFFECTS: updates values in each column of row given a rowObject
     protected void updateRow(Object[] rowObject, int rowIndex, int numberOfColumns) {
         for (int i = 0; i < numberOfColumns; i++) {
-            getTable().setValueAt(rowObject[i], rowIndex, i);
+            table.setValueAt(rowObject[i], rowIndex, i);
         }
     }
 
