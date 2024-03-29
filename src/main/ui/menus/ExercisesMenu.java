@@ -46,9 +46,14 @@ public class ExercisesMenu extends Menu {
             }
         };
 
-        for (ExerciseFields field : ExerciseFields.values()) {
-            model.addColumn(field.getString());
-        }
+        model.addColumn("Name");
+        model.addColumn("Exercise Type");
+        model.addColumn("Weight");
+        model.addColumn("Sets");
+        model.addColumn("Reps");
+        model.addColumn("Rest Time");
+        model.addColumn("Note(s)");
+
         for (Exercise e : getTracker().getTrackerExerciseList().getExerciseList()) {
             Object[] exerciseObject = {e.getName(), e.getExerciseType(), e.getWeight(), e.getSets(), e.getReps(),
                     e.getRestTime(), e.getNote()};

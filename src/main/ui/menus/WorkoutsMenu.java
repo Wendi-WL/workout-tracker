@@ -54,9 +54,11 @@ public class WorkoutsMenu extends Menu {
             }
         };
 
-        for (WorkoutFields field : WorkoutFields.values()) {
-            model.addColumn(field.getString());
-        }
+        model.addColumn("Date");
+        model.addColumn("Workout Type");
+        model.addColumn("Location");
+        model.addColumn("Exercises");
+
         for (Workout w : getTracker().getTrackerWorkoutHistory().getWorkouts()) {
             Object[] workoutObject = {w.getDate(), w.getWorkoutType(), w.getLocation(),
                     w.workoutExercises()};
