@@ -122,13 +122,18 @@ public class Workout {
             return false;
         }
         Workout workout = (Workout) o;
-        return Objects.equals(date, workout.date) && Objects.equals(workoutType, workout.workoutType)
-                && Objects.equals(location, workout.location) && Objects.equals(exercises, workout.exercises);
+        if (!date.equals(workout.date)) {
+            return false;
+        } else if (!workoutType.equals(workout.workoutType)) {
+            return false;
+        } else {
+            return location.equals(workout.location);
+        }
     }
 
     // EFFECTS: overridden hashCode based on overridden equals
     @Override
     public int hashCode() {
-        return Objects.hash(date, workoutType, location, exercises);
+        return Objects.hash(date, workoutType, location);
     }
 }

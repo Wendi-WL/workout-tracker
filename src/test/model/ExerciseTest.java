@@ -49,4 +49,77 @@ public class ExerciseTest {
                 "Notes: this is a test note",
                 testExercise.exerciseDetails());
     }
+
+    @Test
+    public void equalsTest() {
+        Exercise testExerciseEquals = new Exercise("exercise", "legs", 27.5, 3, 12, 90, "");
+        assertEquals(testExercise, testExerciseEquals);
+    }
+
+    @Test
+    public void equalsSameObjectTest() {
+        Exercise testExerciseSameObject = testExercise;
+        assertEquals(testExercise, testExerciseSameObject);
+    }
+
+    @Test
+    public void equalsToNullTest() {
+        assertNotEquals(testExercise, null);
+    }
+
+    @Test
+    public void equalsToDifferentClassTest() {
+        Workout testWorkout = new Workout(2024, 1, 1, "type", "location");
+        assertNotEquals(testExercise, testWorkout);
+    }
+
+    @Test
+    public void equalsDiffNameTest() {
+        Exercise testExerciseDiffName = new Exercise("exercise 2", "legs", 27.5, 3, 12, 90, "");
+        assertNotEquals(testExercise, testExerciseDiffName);
+    }
+
+    @Test
+    public void equalsDiffTypeTest() {
+        Exercise testExerciseDiffType = new Exercise("exercise", "arms", 27.5, 3, 12, 90, "");
+        assertNotEquals(testExercise, testExerciseDiffType);
+    }
+
+    @Test
+    public void equalsDiffWeightTest() {
+        Exercise testExerciseDiffWeight = new Exercise("exercise", "legs", 12, 3, 12, 90, "");
+        assertNotEquals(testExercise, testExerciseDiffWeight);
+    }
+
+    @Test
+    public void equalsDiffSetsTest() {
+        Exercise testExerciseDiffSets = new Exercise("exercise", "legs", 27.5, 4, 12, 90, "");
+        assertNotEquals(testExercise, testExerciseDiffSets);
+    }
+
+    @Test
+    public void equalsDiffRepsTest() {
+        Exercise testExerciseDiffReps = new Exercise("exercise", "legs", 27.5, 3, 10, 90, "");
+        assertNotEquals(testExercise, testExerciseDiffReps);
+    }
+
+    @Test
+    public void equalsDiffRestTimeTest() {
+        Exercise testExerciseDiffRestTime = new Exercise("exercise", "legs", 27.5, 3, 12, 60, "");
+        assertNotEquals(testExercise, testExerciseDiffRestTime);
+    }
+
+    @Test
+    public void equalsDiffNoteTest() {
+        Exercise testExerciseDiffNote = new Exercise("exercise", "legs", 27.5, 3, 12, 90, "note");
+        assertNotEquals(testExercise, testExerciseDiffNote);
+    }
+
+    @Test
+    void hashCodeTest() {
+        Exercise testExerciseEquals = new Exercise("exercise", "legs", 27.5, 3, 12, 90, "");
+        assertEquals(testExercise.hashCode(), testExerciseEquals.hashCode());
+        Exercise testExerciseNotEquals = new Exercise("not exercise", "legs", 27.5, 3, 12, 90, "");
+        assertNotEquals(testExercise.hashCode(), testExerciseNotEquals.hashCode());
+    }
 }

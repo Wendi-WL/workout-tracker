@@ -116,9 +116,21 @@ public class Exercise {
             return false;
         }
         Exercise exercise = (Exercise) o;
-        return Double.compare(weight, exercise.weight) == 0 && sets == exercise.sets && reps == exercise.reps
-                && restTime == exercise.restTime && Objects.equals(name, exercise.name)
-                && Objects.equals(exerciseType, exercise.exerciseType) && Objects.equals(note, exercise.note);
+        if (!name.equals(exercise.name)) {
+            return false;
+        } else if (!exerciseType.equals(exercise.exerciseType)) {
+            return false;
+        } else if (weight != exercise.weight) {
+            return false;
+        } else if (sets != exercise.sets) {
+            return false;
+        } else if (reps != exercise.reps) {
+            return false;
+        } else if (restTime != exercise.restTime) {
+            return false;
+        } else {
+            return note.equals(exercise.note);
+        }
     }
 
     // EFFECTS: overridden hashCode based on overridden equals

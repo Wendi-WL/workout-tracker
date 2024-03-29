@@ -110,4 +110,58 @@ public class WorkoutTest {
                 testWorkout.workoutDetailsAndExercises());
     }
 
+    @Test
+    public void workoutDetailsAndExercisesEmptyExercisesTest() {
+        assertEquals("2024-01-02 full body workout at ARC\nExercises: ",
+                testWorkout.workoutDetailsAndExercises());
+    }
+
+    @Test
+    public void equalsTest() {
+        Workout testWorkoutEquals = new Workout(2024, 1, 2, "full body", "ARC");
+        assertEquals(testWorkout, testWorkoutEquals);
+    }
+
+    @Test
+    public void equalsSameObjectTest() {
+        Workout testWorkoutSameObject = testWorkout;
+        assertEquals(testWorkout, testWorkoutSameObject);
+    }
+
+    @Test
+    public void equalsToNullTest() {
+        assertNotEquals(testWorkout, null);
+    }
+
+    @Test
+    public void equalsToDifferentClassTest() {
+        assertNotEquals(testWorkout, testExercise1);
+    }
+
+    @Test
+    public void equalsDiffDateTest() {
+        Workout testWorkoutDiffDate = new Workout(2024, 2, 2, "full body", "ARC");
+        assertNotEquals(testWorkout, testWorkoutDiffDate);
+    }
+
+    @Test
+    public void equalsDiffTypeTest() {
+        Workout testWorkoutDiffType = new Workout(2024, 1, 2, "upper body", "ARC");
+        assertNotEquals(testWorkout, testWorkoutDiffType);
+    }
+
+    @Test
+    public void equalsDiffLocationTest() {
+        Workout testWorkoutDiffLocation = new Workout(2024, 1, 2, "full body", "BirdCoop");
+        assertNotEquals(testWorkout, testWorkoutDiffLocation);
+    }
+
+    @Test
+    void hashCodeTest() {
+        Workout testWorkoutEquals = new Workout(2024, 1, 2, "full body", "ARC");
+        assertEquals(testWorkout.hashCode(), testWorkoutEquals.hashCode());
+        Workout testWorkoutNotEquals = new Workout(2023, 1, 1, "arms", "BirdCoop");
+        assertNotEquals(testWorkout.hashCode(), testWorkoutNotEquals.hashCode());
+    }
+
 }
