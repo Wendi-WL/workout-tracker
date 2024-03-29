@@ -104,9 +104,9 @@ public class TrackerGUI extends JFrame {
                 "Load Option", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (saveOrNot == JOptionPane.YES_OPTION) {
             saveData();
-            System.exit(0);
+            exitDialog();
         } else if (saveOrNot == JOptionPane.NO_OPTION) {
-            System.exit(0);
+            exitDialog();
         }
     }
 
@@ -123,5 +123,10 @@ public class TrackerGUI extends JFrame {
             JOptionPane.showConfirmDialog(null, "Cannot save to file with invalid name.", "File Write Error",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void exitDialog() {
+        JOptionPane.showMessageDialog(null, "Exiting... Thank you for using Workout Tracker!");
+        System.exit(0);
     }
 }
