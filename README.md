@@ -53,3 +53,21 @@ there is an event ("exercise added to exercise list"/"workout added to workout h
 there is an event ("exercise removed from the exercise list"/"workout removed from the workout history") as appropriate.
 - When the user quits the program, the event log containing all the events since program run are printed on the console,
 then the program closes.
+
+## Phase 4: Task 3
+If I had more time to improve my design, I would create a new class (e.g., AllExercises) 
+to store a list of all created exercises. 
+This class would either extend ExerciseList or have a field of type ExerciseList, 
+so it can use the same methods as ExerciseList. 
+AllExercises would use the Singleton pattern so that there is only one instance of this master list of exercises, 
+which is different from the multiple ExerciseList objects that are instantiated by each Workout object, 
+as each Workout object currently has an ExerciseList field. 
+I would also make WorkoutHistory a Singleton class, since there should only be one instance in the program.
+<br> <br>
+The Tracker (console-based UI) and TrackerGUI (graphical UI) would then be able to remove their associations 
+with ExerciseList and WorkoutHistory. 
+Tracker and TrackerGUI could instead access the one AllExercises instance and the one WorkoutHistory instance
+with a getInstance method, since they are both now Singleton classes.
+This change would allow for Tracker and TrackerGUI to no longer be coupled 
+with the chain on associations between Exercise, ExerciseList, Workout, and WorkoutHistory,
+which reduces coupling in the overall project.
