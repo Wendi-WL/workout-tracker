@@ -58,6 +58,7 @@ public class Workout {
     // EFFECTS: adds the exercise to the list of exercises in this workout
     public void addExercise(Exercise e) {
         exercises.create(e);
+        EventLog.getInstance().logEvent(new Event("\t...for the workout: " + workoutDetails()));
     }
 
     // REQUIRES: e is in exercises
@@ -65,6 +66,7 @@ public class Workout {
     // EFFECTS: removes the exercise from the list of exercises in this workout
     public void removeExercise(Exercise e) {
         exercises.delete(e);
+        EventLog.getInstance().logEvent(new Event("\t...for the workout: " + workoutDetails()));
     }
 
     // EFFECTS: returns a String of a formatted date

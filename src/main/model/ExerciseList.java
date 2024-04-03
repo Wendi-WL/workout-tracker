@@ -24,6 +24,7 @@ public class ExerciseList {
     // EFFECTS: adds the exercise to the list of all created exercises
     public void create(Exercise e) {
         exerciseList.add(e);
+        EventLog.getInstance().logEvent(new Event("Exercise: " + e.getName() + " was added to the exercise list"));
     }
 
     // REQUIRES: e is in exerciseList
@@ -31,6 +32,7 @@ public class ExerciseList {
     // EFFECTS: removes the exercise from the list of all created exercises
     public void delete(Exercise e) {
         exerciseList.remove(e);
+        EventLog.getInstance().logEvent(new Event("Exercise: " + e.getName() + " was removed from the exercise list"));
     }
 
     // REQUIRES: e is in exerciseList

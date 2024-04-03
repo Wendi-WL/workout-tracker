@@ -124,6 +124,13 @@ public class TrackerGUI extends JFrame {
     private void exitDialog() {
         JOptionPane.showMessageDialog(null, "Thank you for using Workout Tracker!\nClick 'OK' to exit :)",
                 "Exit dialog", JOptionPane.PLAIN_MESSAGE);
+        exit();
+    }
+
+    private void exit() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e.getDescription());
+        }
         System.exit(0);
     }
 }

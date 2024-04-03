@@ -1,44 +1,73 @@
 {
-    "exercises": [
-        {
-            "rest time": 2,
-            "note": "hi!",
-            "reps": 2,
-            "sets": 2,
-            "exercise type": "hi",
-            "name": "e1",
-            "weight": 2
-        },
-        {
-            "rest time": 60,
-            "note": "",
-            "reps": 1,
-            "sets": 3,
-            "exercise type": "full",
-            "name": "e2",
-            "weight": 12
-        }
-    ],
-    "workouts": [
-        {
-            "date": [
-                2023,
-                12,
-                2
-            ],
-            "exercises": [],
-            "location": "2",
-            "workout type": "legs"
-        },
-        {
-            "date": [
-                2024,
-                1,
-                1
-            ],
-            "exercises": [],
-            "location": "arc",
-            "workout type": "hi"
-        }
-    ]
+  "exercises": [
+    {
+      "rest time": 60,
+      "note": "sample note",
+      "reps": 12,
+      "sets": 3,
+      "exercise type": "legs",
+      "name": "e1",
+      "weight": 27.5
+    },
+    {
+      "rest time": 30,
+      "note": "another sample note",
+      "reps": 8,
+      "sets": 5,
+      "exercise type": "arms",
+      "name": "e2",
+      "weight": 12.5
+    },
+    {
+      "rest time": 60,
+      "note": "",
+      "reps": 15,
+      "sets": 4,
+      "exercise type": "core",
+      "name": "e3",
+      "weight": 0
+    }
+  ],
+  "workouts": [
+    {
+      "date": [
+        2023,
+        2,
+        3
+      ],
+      "exercises": [],
+      "location": "BirdCoop",
+      "workout type": "lower body"
+    },
+    {
+      "date": [
+        2024,
+        1,
+        1
+      ],
+      "exercises": [],
+      "location": "ARC",
+      "workout type": "full body"
+    },
+    {
+      "date": [
+        2023,
+        12,
+        31
+      ],
+      "exercises": [],
+      "location": "BirdCoop",
+      "workout type": "upper body"
+    },
+    {
+      "date": [
+        2024,
+        3,
+        1
+      ],
+      "exercises": [],
+      "location": "ARC",
+      "workout type": "core"
+    }
+  ]
 }

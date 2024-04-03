@@ -25,6 +25,8 @@ public class WorkoutHistory {
         if (!workouts.contains(w)) {
             workouts.add(w);
         }
+        EventLog.getInstance().logEvent(new Event("Workout: " + w.workoutDetails()
+                + " was added to the workout history"));
     }
 
     // REQUIRES: w is in workouts
@@ -32,6 +34,8 @@ public class WorkoutHistory {
     // EFFECTS: removes the workout from the workout history
     public void removeWorkout(Workout w) {
         workouts.remove(w);
+        EventLog.getInstance().logEvent(new Event("Workout: " + w.workoutDetails()
+                + " was removed from the workout history"));
     }
 
     // EFFECTS: returns a list of specified workouts' date, type, and location details
