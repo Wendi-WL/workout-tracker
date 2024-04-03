@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EventTest {
     private Event testEvent;
@@ -56,6 +56,17 @@ public class EventTest {
     public void equalsDiffDescriptionTest() {
         Event testEventDiffDescription = new Event("Exercise removed");
         assertNotEquals(testEvent, testEventDiffDescription);
+    }
+
+    @Test
+    public void equalsDiffTimeTest() {
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            fail();
+        }
+        Event testEventDiffTime = new Event("Exercise added");
+        assertNotEquals(testEvent, testEventDiffTime);
     }
 
     @Test
