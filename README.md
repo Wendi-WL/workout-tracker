@@ -42,3 +42,14 @@ then clicking the "Delete" button, and confirming using the "Yes" button in the 
 - You can locate my visual component by looking at the icons on the "Create", "Edit", and "Delete" buttons.
 - You can save the state of my application by closing the window and selecting "Yes" in the save option dialog.
 - You can reload the state of my application by launching the application and selecting "Yes" in the load option dialog.
+
+## Phase 4: Task 2
+- If the user chooses to load from save file when the program first opens, 
+the loaded exercises/workouts appear as "exercise added to exercise list"/"workout added to workout history" events,
+with corresponding names of the exercise/workout in the event description as well.
+- Whenever the user creates an exercise/a workout, 
+there is an event ("exercise added to exercise list"/"workout added to workout history") as appropriate.
+- Whenever the user deletes an exercise/a workout,
+there is an event ("exercise removed from the exercise list"/"workout removed from the workout history") as appropriate.
+- When the user quits the program, the event log containing all the events since program run are printed on the console,
+then the program closes.
