@@ -21,6 +21,7 @@ public class WorkoutHistory {
 
     // MODIFIES: this
     // EFFECTS: adds the workout to the workout history, if there is no existing workout with same date, type, location
+    // and logs event
     public void addWorkout(Workout w) {
         if (!workouts.contains(w)) {
             workouts.add(w);
@@ -31,7 +32,7 @@ public class WorkoutHistory {
 
     // REQUIRES: w is in workouts
     // MODIFIES: this
-    // EFFECTS: removes the workout from the workout history
+    // EFFECTS: removes the workout from the workout history and logs event
     public void removeWorkout(Workout w) {
         workouts.remove(w);
         EventLog.getInstance().logEvent(new Event("Workout: " + w.workoutDetails()

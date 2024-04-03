@@ -55,7 +55,7 @@ public class Workout {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds the exercise to the list of exercises in this workout
+    // EFFECTS: adds the exercise to the list of exercises in this workout and logs event
     public void addExercise(Exercise e) {
         exercises.create(e);
         EventLog.getInstance().logEvent(new Event("\t...for the workout: " + workoutDetails()));
@@ -63,7 +63,7 @@ public class Workout {
 
     // REQUIRES: e is in exercises
     // MODIFIES: this
-    // EFFECTS: removes the exercise from the list of exercises in this workout
+    // EFFECTS: removes the exercise from the list of exercises in this workout and logs event
     public void removeExercise(Exercise e) {
         exercises.delete(e);
         EventLog.getInstance().logEvent(new Event("\t...for the workout: " + workoutDetails()));
